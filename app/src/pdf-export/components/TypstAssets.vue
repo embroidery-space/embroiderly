@@ -7,22 +7,22 @@ import type { Component } from "vue";
 
 import { IconPlus, IconTrash } from "~/assets/icons/";
 import { useFilePicker, useI18n } from "~/composables/";
+import type { FilePickerOpenOptions } from "~/composables/";
 import { PdfAsset } from "~/lib/pattern/";
 
 import AsideBlock from "./utils/AsideBlock.vue";
+
+export type TypstAssetType = "file" | "font" | "image";
 
 interface AssetTreeItem extends TreeItem {
   children?: AssetTreeItem[];
   trailingButton: Component;
 }
 
-const { files, fonts } = defineProps<{ files: PdfAsset[]; fonts: PdfAsset[] }>();
+const { files, fonts, images } = defineProps<{ files: PdfAsset[]; fonts: PdfAsset[]; images: PdfAsset[] }>();
 const emit = defineEmits<{
-  addFiles: [files: PdfAsset[]];
-  removeFile: [index: number, fileNmae: string];
-
-  addFonts: [fonts: PdfAsset[]];
-  removeFont: [index: number, fileNmae: string];
+  addAssets: [type: TypstAssetType, assets: PdfAsset[]];
+  removeAsset: [type: TypstAssetType, index: number, fileName: string];
 }>();
 
 const confirm = useConfirm();
@@ -43,7 +43,7 @@ const fontItems = computed<AssetTreeItem[]>(() => [
         tooltip: fluent.$t("pdf-export-assets-remove-file"),
         async onClick(e) {
           e.stopPropagation();
-          await removeFont(index, item.fileName);
+          await removeAsset("font", index, item.fileName);
         },
       }),
     })),
@@ -56,7 +56,45 @@ const fontItems = computed<AssetTreeItem[]>(() => [
       tooltip: fluent.$t("pdf-export-assets-add-files"),
       async onClick(e) {
         e.stopPropagation();
-        await addFonts();
+        await addAssets("font", {
+          id: filePicker.ids.font,
+          types: filePicker.filters.font,
+        });
+      },
+    }),
+    defaultExpanded: true,
+    nested: true,
+  },
+  {
+    label: fluent.$t("pdf-export-assets-images"),
+    children: images.map((item, index) => ({
+      label: item.fileName,
+      trailingButton: h(ButtonIcon, {
+        square: true,
+        color: "neutral",
+        variant: "ghost",
+        size: "sm",
+        icon: IconTrash,
+        tooltip: fluent.$t("pdf-export-assets-remove-file"),
+        async onClick(e) {
+          e.stopPropagation();
+          await removeAsset("image", index, item.fileName);
+        },
+      }),
+    })),
+    trailingButton: h(ButtonIcon, {
+      square: true,
+      color: "neutral",
+      variant: "ghost",
+      size: "sm",
+      icon: IconPlus,
+      tooltip: fluent.$t("pdf-export-assets-add-files"),
+      async onClick(e) {
+        e.stopPropagation();
+        await addAssets("image", {
+          id: filePicker.ids.image,
+          types: filePicker.filters.image,
+        });
       },
     }),
     defaultExpanded: true,
@@ -75,7 +113,7 @@ const fontItems = computed<AssetTreeItem[]>(() => [
         tooltip: fluent.$t("pdf-export-assets-remove-file"),
         async onClick(e) {
           e.stopPropagation();
-          await removeFile(index, item.fileName);
+          await removeAsset("file", index, item.fileName);
         },
       }),
     })),
@@ -88,7 +126,9 @@ const fontItems = computed<AssetTreeItem[]>(() => [
       tooltip: fluent.$t("pdf-export-assets-add-files"),
       async onClick(e) {
         e.stopPropagation();
-        await addFiles();
+        await addAssets("file", {
+          id: filePicker.ids.other,
+        });
       },
     }),
     defaultExpanded: true,
@@ -96,14 +136,11 @@ const fontItems = computed<AssetTreeItem[]>(() => [
   },
 ]);
 
-async function addFiles() {
-  const handles = await filePicker.open({
-    id: filePicker.ids.other,
-    multiple: true,
-  });
+async function addAssets(type: TypstAssetType, filePickerOptions: Omit<FilePickerOpenOptions, "multiple">) {
+  const handles = await filePicker.open({ ...filePickerOptions, multiple: true });
   if (!handles) return;
 
-  const files = await Promise.all(
+  const assets = await Promise.all(
     handles.map(async (handle) => {
       const fileName = handle.name;
       const content = await handle.getFile().then((f) => f.bytes());
@@ -111,36 +148,12 @@ async function addFiles() {
     }),
   );
 
-  emit("addFiles", files);
+  emit("addAssets", type, assets);
 }
 
-async function removeFile(index: number, fileName: string) {
-  const accepted = await confirm.open(fluent.$t("pdf-export-assets-file-removal", { fileName })).result;
-  if (accepted) emit("removeFile", index, fileName);
-}
-
-async function addFonts() {
-  const handles = await filePicker.open({
-    types: filePicker.filters.font,
-    id: filePicker.ids.font,
-    multiple: true,
-  });
-  if (!handles) return;
-
-  const fonts = await Promise.all(
-    handles.map(async (handle) => {
-      const fileName = handle.name;
-      const content = await handle.getFile().then((f) => f.bytes());
-      return new PdfAsset({ fileName, content });
-    }),
-  );
-
-  emit("addFonts", fonts);
-}
-
-async function removeFont(index: number, fileName: string) {
-  const accepted = await confirm.open(fluent.$t("pdf-export-assets-file-removal", { fileName })).result;
-  if (accepted) emit("removeFont", index, fileName);
+async function removeAsset(type: TypstAssetType, index: number, fileName: string) {
+  const accepted = await confirm.open(fluent.$ta("pdf-export-assets-file-removal", { fileName })).result;
+  if (accepted) emit("removeAsset", type, index, fileName);
 }
 </script>
 

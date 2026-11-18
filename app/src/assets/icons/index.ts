@@ -54,6 +54,23 @@ export { default as IconEraser } from "~icons/mdi/eraser";
 export { default as IconSplitView } from "~icons/material-symbols/vertical-split-rounded";
 export { default as IconSave } from "~icons/material-symbols/save-rounded";
 
+// Typst Editor
+export { default as IconFormatH1 } from "~icons/material-symbols/format-h1-rounded";
+export { default as IconFormatH2 } from "~icons/material-symbols/format-h2-rounded";
+export { default as IconFormatH3 } from "~icons/material-symbols/format-h3-rounded";
+export { default as IconFormatH4 } from "~icons/material-symbols/format-h4-rounded";
+export { default as IconFormatH5 } from "~icons/material-symbols/format-h5-rounded";
+export { default as IconFormatH6 } from "~icons/material-symbols/format-h6-rounded";
+export { default as IconFormatBold } from "~icons/material-symbols/format-bold-rounded";
+export { default as IconFormatItalic } from "~icons/material-symbols/format-italic-rounded";
+export { default as IconFormatUnderlined } from "~icons/material-symbols/format-underlined-rounded";
+export { default as IconFormatListBulleted } from "~icons/material-symbols/format-list-bulleted-rounded";
+export { default as IconFormatListNumbered } from "~icons/material-symbols/format-list-numbered-rounded";
+export { default as IconFormatLink } from "~icons/material-symbols/link-2-rounded";
+export { default as IconFormatImage } from "~icons/material-symbols/imagesmode-rounded";
+export { default as IconFormatTable } from "~icons/material-symbols/table";
+export { default as IconFormatAttachPatternOxs } from "~icons/material-symbols/heap-snapshot-large-rounded";
+
 // Stitches (custom collection)
 export { default as IconStitchFull } from "~icons/stitches/full";
 export { default as IconStitchPetite } from "~icons/stitches/petite";

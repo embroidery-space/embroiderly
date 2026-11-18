@@ -27,7 +27,7 @@ export function typstTheme(dark = false, settings?: TypstEditorSettings) {
       ".cm-content": {
         fontFeatureSettings: fontLigatures
           ? '"calt" 1, "liga" 1, "ss01" 1, "ss02" 1, "ss03" 1, "ss04" 1, "ss05" 1, "ss06" 1, "ss07" 1, "ss08" 1, "ss09" 1, "ss10" 1'
-          : "normal",
+          : '"calt" 1',
       },
     }),
   ];

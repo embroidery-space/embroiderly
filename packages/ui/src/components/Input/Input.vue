@@ -8,7 +8,7 @@ import type { UseComponentIconsProps } from "../../composables/useComponentIcons
 import Icon from "../Icon/Icon.vue";
 
 export interface InputProps extends UseComponentIconsProps {
-  /** Whether the input is disabled. */
+  defaultValue?: string;
   disabled?: boolean;
 }
 
@@ -19,7 +19,7 @@ export interface InputSlots {
 
 defineOptions({ inheritAttrs: false });
 
-const modelValue = defineModel<string>();
+const modelValue = defineModel<string>({ default: (props) => props.defaultValue ?? "" });
 const props = defineProps<InputProps>();
 const slots = defineSlots<InputSlots>();
 const fieldContext = injectFieldRootContext(null);
@@ -149,6 +149,10 @@ const isTrailingSpinning = computed(() => props.loading && !hasLeading.value && 
     cursor: not-allowed;
 
     opacity: 75%;
+  }
+
+  &[data-invalid] {
+    box-shadow: inset 0 0 0 2px var(--color-error);
   }
 
   .has-leading > & {

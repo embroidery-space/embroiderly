@@ -6,13 +6,7 @@ defineOptions({ inheritAttrs: false });
 </script>
 
 <template>
-  <FormField v-bind="$attrs" class="form-field-demo">
+  <FormField v-bind="$attrs">
     <Input placeholder="you@example.com" />
   </FormField>
 </template>
-
-<style>
-.form-field-demo [data-slot="container"] > [data-slot="root"] {
-  width: 100%;
-}
-</style>

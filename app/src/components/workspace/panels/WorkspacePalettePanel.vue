@@ -530,11 +530,12 @@ button.save[data-slot="base"] {
 .symbol {
   display: inline-flex;
   flex-shrink: 0;
-  align-items: center;
   justify-content: center;
 
   width: calc(var(--spacing) * 4);
   height: calc(var(--spacing) * 4);
+
+  line-height: 100%;
 
   &.contrast {
     border-radius: var(--radius-sm);

@@ -29,6 +29,8 @@ defineSlots<FormFieldSlots>();
     <div :class="[(label || description) && $style.container]" data-slot="container">
       <slot />
     </div>
+
+    <Field.Error data-slot="error" :class="$style.error" />
   </Field.Root>
 </template>
 
@@ -57,5 +59,9 @@ defineSlots<FormFieldSlots>();
 
 .container {
   margin-top: calc(var(--spacing) * 1);
+}
+
+.error {
+  color: var(--color-error);
 }
 </style>

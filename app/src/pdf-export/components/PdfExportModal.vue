@@ -42,8 +42,10 @@ import {
 } from "../stores/useTypstEditorStateStore.ts";
 
 import TypstAssets from "./TypstAssets.vue";
+import type { TypstAssetType } from "./TypstAssets.vue";
 import TypstEditor from "./TypstEditor.vue";
 import TypstSettings from "./TypstSettings.vue";
+import TypstToolbar from "./TypstToolbar.vue";
 
 const open = defineModel<boolean>("open", { default: false });
 
@@ -69,6 +71,8 @@ const isDirty = computed(() => !isEqual(patternStore.pattern.pdf, pdf.value));
 
 const totalPages = ref<number>();
 const currentPage = ref(1);
+
+const currentSelection = ref("");
 
 const isDark = computed(() => {
   return settingsStore.ui.theme === "system"
@@ -215,28 +219,51 @@ async function loadFonts(fonts: string[]) {
   return succeededFonts;
 }
 
-async function addFiles(files: PdfAsset[]) {
-  await service.addFiles(PdfAsset.serialize(files));
+async function addAssets(type: TypstAssetType, assets: PdfAsset[]) {
+  const data = PdfAsset.serialize(assets);
+  switch (type) {
+    case "file": {
+      await service.addFiles(data);
+      pdf.value.files.push(...assets);
+      break;
+    }
+
+    case "font": {
+      await service.addFonts(data);
+      pdf.value.fonts.push(...assets);
+      break;
+    }
+
+    case "image": {
+      await service.addFiles(data);
+      pdf.value.images.push(...assets);
+      break;
+    }
+  }
   await updatePreview({ template: pdf.value.template, page: currentPage.value });
-  pdf.value.files.push(...files);
 }
 
-async function removeFile(index: number, fileName: string) {
-  await service.removeFile(fileName);
-  await updatePreview({ template: pdf.value.template, page: currentPage.value });
-  pdf.value.files.splice(index, 1);
-}
+async function removeAsset(type: TypstAssetType, index: number, fileName: string) {
+  switch (type) {
+    case "file": {
+      await service.removeFile(fileName);
+      pdf.value.files.splice(index, 1);
+      break;
+    }
 
-async function addFonts(fonts: PdfAsset[]) {
-  await service.addFonts(PdfAsset.serialize(fonts));
-  await updatePreview({ template: pdf.value.template, page: currentPage.value });
-  pdf.value.fonts.push(...fonts);
-}
+    case "font": {
+      await service.removeFont(fileName);
+      pdf.value.fonts.splice(index, 1);
+      break;
+    }
 
-async function removeFont(index: number, fileName: string) {
-  await service.removeFont(fileName);
+    case "image": {
+      await service.removeFile(fileName);
+      pdf.value.images.splice(index, 1);
+      break;
+    }
+  }
   await updatePreview({ template: pdf.value.template, page: currentPage.value });
-  pdf.value.fonts.splice(index, 1);
 }
 
 onMounted(async () => {
@@ -255,6 +282,7 @@ onMounted(async () => {
         .exportPattern(patternStore.pattern.id, "oxs")
         .then((content) => new PdfAsset({ fileName: "pattern.oxs", content })),
       ...pdf.value.files,
+      ...pdf.value.images,
     ]),
     PdfAsset.serialize([...baseFonts, ...pdf.value.fonts]),
   );
@@ -314,13 +342,10 @@ onUnmounted(() => service.destroy());
 
       <TypstAssets
         v-if="typstEditorStateStore.activeAsideBlock === TypstEditorAsideBlock.Assets"
-        :files="pdf.files"
-        :fonts="pdf.fonts"
+        v-bind="pdf"
         :class="$style.asideBlock"
-        @add-files="addFiles"
-        @remove-file="removeFile"
-        @add-fonts="addFonts"
-        @remove-font="removeFont"
+        @add-assets="addAssets"
+        @remove-asset="removeAsset"
       />
 
       <TypstSettings
@@ -330,6 +355,20 @@ onUnmounted(() => service.destroy());
       />
 
       <div :class="$style.toolbar">
+        <TypstToolbar
+          :current-selection="currentSelection"
+          :images="pdf.images.map((asset) => asset.fileName)"
+          @toggle-heading="typstEditor?.toggleHeading"
+          @toggle-bold-text="typstEditor?.toggleBoldText"
+          @toggle-italic-text="typstEditor?.toggleItalicText"
+          @toggle-underlined-text="typstEditor?.toggleUnderlinedText"
+          @toggle-bulleted-list="typstEditor?.toggleBulletedList"
+          @toggle-numbered-list="typstEditor?.toggleNumberedList"
+          @insert-link="typstEditor?.insertLink"
+          @insert-image="typstEditor?.insertImage"
+          @attach-pattern-oxs="typstEditor?.attachPatternOxs"
+        />
+
         <Button
           :loading="saveInProgress"
           variant="outline"
@@ -354,6 +393,7 @@ onUnmounted(() => service.destroy());
             v-model="pdf.template"
             :dark="isDark"
             :settings="typstEditorStateStore.settings"
+            @selection-change="currentSelection = $event"
           />
         </SplitterPanel>
 

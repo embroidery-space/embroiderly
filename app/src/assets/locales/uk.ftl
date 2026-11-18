@@ -582,7 +582,42 @@ pdf-export = Експорт PDF
 
 pdf-export-view-mode-code = Код
 pdf-export-view-mode-split-view = Розділений вигляд
-pdf-export-view-mode-preview = Преʼю
+pdf-export-view-mode-preview = Превʼю
+
+pdf-export-format-heading = Заголовок
+pdf-export-format-heading-n = Заголовок { $level }
+
+pdf-export-format-bold = Жирний
+pdf-export-format-italic = Курсив
+pdf-export-format-underlined = Підкреслений
+
+pdf-export-format-bulleted-list = Вставити маркований список
+pdf-export-format-numbered-list = Вставити нумерований список
+
+pdf-export-format-link = Вставити посилання
+pdf-export-format-link-url = URL
+pdf-export-format-link-url-invalid = Некоректний URL
+pdf-export-format-link-display-text = Текст заміщення
+
+pdf-export-format-image = Вставити зображення
+pdf-export-format-image-file =
+  .label = Файл
+  .description = Завантажте ваші файли у панелі ресурсів
+pdf-export-format-image-alt = Альтернативний опис зображення
+pdf-export-format-image-file-invalid = Виберіть зображення
+
+pdf-export-format-table = Вставити таблицю
+
+pdf-export-format-attach-pattern-oxs = Прикріпити схему у форматі OXS
+pdf-export-format-attach-pattern-oxs-confirmation =
+  .title = Підтвердити вкладення
+  .description =
+   Ви дійсно хочете прикріпити схему?
+   Будь-хто, хто відкриє цей документ, зможе витягнути файл схеми.
+   Можливо, не варто поширювати платні PDF-документи з прикріпленою схемою.
+
+pdf-export-format-insert = Вставити
+pdf-export-format-learn-more = Дізнатися більше
 
 pdf-export-save-template = Зберегти шаблон
 pdf-export-save-template-failed =
@@ -596,7 +631,8 @@ pdf-export-export-document-failed =
 
 pdf-export-assets = Ресурси
 pdf-export-assets-fonts = Шрифти
-pdf-export-assets-files = Зображення та інші файли
+pdf-export-assets-images = Зображення
+pdf-export-assets-files = Інші файли
 
 pdf-export-assets-add-files = Додати файли
 pdf-export-assets-remove-file = Видалити файл

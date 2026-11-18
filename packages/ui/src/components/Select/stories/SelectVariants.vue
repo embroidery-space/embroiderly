@@ -21,7 +21,7 @@ const variants = ["subtle", "outline"] as const;
   flex-direction: column;
   gap: calc(var(--spacing) * 2);
 
-  & > [data-slot="root"] {
+  & > [data-slot="base"] {
     width: calc(var(--spacing) * 40);
   }
 }

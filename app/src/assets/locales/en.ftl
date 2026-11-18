@@ -580,6 +580,40 @@ pdf-export-view-mode-code = Code
 pdf-export-view-mode-split-view = Split view
 pdf-export-view-mode-preview = Preview
 
+pdf-export-format-heading = Heading
+pdf-export-format-heading-n = Heading { $level }
+
+pdf-export-format-bold = Bold
+pdf-export-format-italic = Italic
+pdf-export-format-underlined = Underlined
+
+pdf-export-format-bulleted-list = Insert bulleted list
+pdf-export-format-numbered-list = Insert numbered list
+
+pdf-export-format-link = Insert link
+pdf-export-format-link-url = URL
+pdf-export-format-link-url-invalid = Invalid URL
+pdf-export-format-link-display-text = Display text
+
+pdf-export-format-image = Insert image
+pdf-export-format-image-file =
+  .label = File
+  .description = Upload your images in the Assets panel
+pdf-export-format-image-alt = Alternative description of the image
+pdf-export-format-image-file-invalid = Select the image
+
+pdf-export-format-table = Insert table
+
+pdf-export-format-attach-pattern-oxs = Attach pattern in the OXS format
+pdf-export-format-attach-pattern-oxs-confirmation =
+  .title = Comfirm attachment
+  .description =
+    Do you really want to attach the pattern?
+    Anyone who open the document will be able to extract the pattern file.
+    You may not want to distribute paid PDFs with an attached pattern.
+
+pdf-export-format-insert = Insert
+pdf-export-format-learn-more = Learn more
 
 pdf-export-save-template = Save Template
 pdf-export-save-template-failed =
@@ -593,7 +627,8 @@ pdf-export-export-document-failed =
 
 pdf-export-assets = Assets
 pdf-export-assets-fonts = Fonts
-pdf-export-assets-files = Images and other files
+pdf-export-assets-images = Images
+pdf-export-assets-files = Other files
 
 pdf-export-assets-add-files = Add files
 pdf-export-assets-remove-file = Remove file

@@ -46,7 +46,6 @@ export const Demo: Story = {
     variant: "subtle",
     disabled: false,
     loading: false,
-    searchInput: false,
     placeholder: "Select a status...",
   },
   render: (args) => {
