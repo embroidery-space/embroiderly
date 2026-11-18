@@ -35,9 +35,7 @@ export default Object.freeze<Locale>({
       nextPage: "Наступна сторінка",
     },
     select: {
-      search: "Пошук…",
-      noData: "Немає даних",
-      noMatches: "Збігів не знайдено",
+      empty: "Немає елементів",
     },
     slider: {
       thumb: "Повзунок",

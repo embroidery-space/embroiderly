@@ -18,7 +18,7 @@ defineOptions({ inheritAttrs: false });
   min-width: calc(var(--spacing) * 64);
   min-height: calc(var(--spacing) * 96);
 
-  [data-slot="container"] > [data-slot="root"] {
+  [data-slot="container"] > [data-slot="base"] {
     width: calc(var(--spacing) * 48);
   }
 }

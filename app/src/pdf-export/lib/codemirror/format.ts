@@ -144,3 +144,17 @@ export function insertLink(view: EditorView, url: string, displayText?: string) 
   view.dispatch(transaction);
   view.focus();
 }
+
+export function insertImage(view: EditorView, fileName: string, alt?: string) {
+  const transaction = view.state.changeByRange((range) => {
+    const { from, to } = range;
+    const insert = alt ? `#image("${fileName}", alt: "${alt}")` : `#image("${fileName}")`;
+    return {
+      changes: [{ from, to, insert }],
+      range: EditorSelection.cursor(from + insert.length),
+    };
+  });
+
+  view.dispatch(transaction);
+  view.focus();
+}

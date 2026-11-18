@@ -1,16 +1,12 @@
 <script setup lang="ts" generic="T extends SelectItem">
-import defu from "defu";
-import { useFilter } from "reka-ui";
-import { Combobox } from "reka-ui/namespaced";
-import { computed, ref, toRef } from "vue";
+import { Select } from "reka-ui/namespaced";
+import { computed, toRef } from "vue";
 
 import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import { usePortal } from "../../composables/usePortal.ts";
 import type { IconValue } from "../../types/icons.ts";
 import Icon from "../Icon/Icon.vue";
-import Input from "../Input/Input.vue";
-import type { InputProps } from "../Input/Input.vue";
 
 export interface SelectItemObject {
   /** The type of the item. */
@@ -34,20 +30,11 @@ export interface SelectItemObject {
 export type SelectItem = string | number | SelectItemObject;
 
 export interface SelectProps<T extends SelectItem = SelectItem> {
-  id?: string;
-
   /** The items to display in the select. */
   items?: T[] | T[][];
 
   /** The placeholder text when no value is selected. */
   placeholder?: string;
-
-  /**
-   * Whether to show a search input in the dropdown.
-   * Pass an object with `placeholder` to customize the search input placeholder.
-   * @default false
-   */
-  searchInput?: boolean | InputProps;
 
   /**
    * The style variant of the select.
@@ -82,16 +69,9 @@ const props = withDefaults(defineProps<SelectProps<T>>(), {
 });
 
 const { icons } = useComponentIcons();
-const { contains } = useFilter({ sensitivity: "base" });
 const locale = useLocale();
 
 const portalProps = usePortal(toRef(() => props.portal));
-const searchInputProps = toRef(
-  () => defu(props.searchInput, { placeholder: locale.value.messages.select.search }) as InputProps,
-);
-
-const open = ref(props.defaultOpen ?? false);
-const searchValue = ref("");
 
 const normalizedGroups = computed<SelectItemObject[][]>(() => {
   if (!props.items?.length) return [];
@@ -99,18 +79,6 @@ const normalizedGroups = computed<SelectItemObject[][]>(() => {
     return (props.items as SelectItem[][]).map((group) => group.map((item) => normalizeItem(item)));
   }
   return [(props.items as SelectItem[]).map((item) => normalizeItem(item))];
-});
-
-const filteredGroups = computed<SelectItemObject[][]>(() => {
-  if (!props.searchInput || !searchValue.value) return normalizedGroups.value;
-  return normalizedGroups.value
-    .map((group) =>
-      group.filter((item) => {
-        if (item.type === "separator" || item.type === "label") return false;
-        return contains(item.label ?? "", searchValue.value);
-      }),
-    )
-    .filter((group) => group.length > 0);
 });
 
 const displayValue = computed(() => {
@@ -128,30 +96,21 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 </script>
 
 <template>
-  <Combobox.Root
-    v-model="modelValue"
-    :open="open"
-    :disabled="disabled"
-    :ignore-filter="!searchInput"
-    :reset-search-term-on-blur="false"
-    data-slot="root"
-    :class="[$style.root, $style[`variant-${variant}`], disabled && $style.disabled]"
-    @update:open="
-      (value) => {
-        open = value;
-        if (!value) searchValue = '';
-      }
-    "
-  >
-    <Combobox.Anchor as-child>
-      <Combobox.Trigger :id="id" v-bind="$attrs" :disabled="disabled" data-slot="base" :class="$style.base">
-        <span v-if="displayValue" data-slot="value" :class="$style.value">
-          {{ displayValue }}
-        </span>
-        <span v-else data-slot="placeholder" :class="$style.placeholder">
-          {{ placeholder }}
-        </span>
+  <Select.Root v-model="modelValue" :default-open="defaultOpen" :disabled="disabled">
+    <Select.Trigger
+      v-bind="$attrs"
+      :disabled="disabled"
+      data-slot="base"
+      :class="[$style.base, $style[`variant-${variant}`], disabled && $style.disabled]"
+    >
+      <Select.Value
+        :data-slot="displayValue ? 'value' : 'placeholder'"
+        :class="displayValue ? $style.value : $style.placeholder"
+      >
+        {{ displayValue ?? placeholder }}
+      </Select.Value>
 
+      <Select.Icon as-child>
         <Icon
           v-if="loading"
           :name="icons.loading"
@@ -159,75 +118,71 @@ function normalizeItem(item: SelectItem): SelectItemObject {
           :class="[$style.trailingIcon, $style.loading]"
         />
         <Icon v-else :name="icons.chevronDown" data-slot="trailing-icon" :class="$style.trailingIcon" />
-      </Combobox.Trigger>
-    </Combobox.Anchor>
+      </Select.Icon>
+    </Select.Trigger>
 
-    <Combobox.Portal v-bind="portalProps">
-      <Combobox.Content
+    <Select.Portal v-bind="portalProps">
+      <Select.Content
         position="popper"
         :side-offset="4"
         :collision-padding="4"
         data-slot="content"
         :class="$style.content"
       >
-        <Combobox.Input v-if="!!searchInput" v-model="searchValue" as-child>
-          <Input v-bind="searchInputProps" autofocus autocomplete="off" data-slot="input" />
-        </Combobox.Input>
-
-        <Combobox.Viewport data-slot="viewport" :class="$style.viewport">
-          <Combobox.Empty data-slot="empty" :class="$style.empty">
-            {{ searchValue ? locale.messages.select.noMatches : locale.messages.select.noData }}
-          </Combobox.Empty>
-
-          <Combobox.Group v-for="(group, groupIndex) in filteredGroups" :key="`group-${groupIndex}`" data-slot="group">
-            <template v-for="(item, index) in group" :key="`group-${groupIndex}-${index}`">
-              <Combobox.Separator
-                v-if="item.type === 'separator'"
-                data-slot="separator"
-                :class="[$style.separator, item.class]"
-              />
-
-              <Combobox.Label v-else-if="item.type === 'label'" data-slot="label" :class="[$style.label, item.class]">
-                {{ item.label }}
-              </Combobox.Label>
-
-              <Combobox.Item
-                v-else
-                :value="item.value!"
-                :disabled="item.disabled"
-                data-slot="item"
-                :class="[$style.item, item.class]"
-              >
-                <Icon
-                  v-if="item.icon"
-                  :name="item.icon"
-                  data-slot="item-leading-icon"
-                  :class="$style.itemLeadingIcon"
+        <Select.Viewport data-slot="viewport" :class="$style.viewport">
+          <template v-if="normalizedGroups.length">
+            <Select.Group
+              v-for="(group, groupIndex) in normalizedGroups"
+              :key="`group-${groupIndex}`"
+              data-slot="group"
+            >
+              <template v-for="(item, index) in group" :key="`group-${groupIndex}-${index}`">
+                <Select.Separator
+                  v-if="item.type === 'separator'"
+                  data-slot="separator"
+                  :class="[$style.separator, item.class]"
                 />
-                <span data-slot="item-label" :class="$style.itemLabel">
+
+                <Select.Label v-else-if="item.type === 'label'" data-slot="label" :class="[$style.label, item.class]">
                   {{ item.label }}
-                </span>
-                <Combobox.ItemIndicator>
-                  <Icon :name="icons.check" data-slot="item-indicator" :class="$style.itemIndicator" />
-                </Combobox.ItemIndicator>
-              </Combobox.Item>
-            </template>
-          </Combobox.Group>
-        </Combobox.Viewport>
-      </Combobox.Content>
-    </Combobox.Portal>
-  </Combobox.Root>
+                </Select.Label>
+
+                <Select.Item
+                  v-else
+                  :value="item.value!"
+                  :disabled="item.disabled"
+                  data-slot="item"
+                  :class="[$style.item, item.class]"
+                >
+                  <Icon
+                    v-if="item.icon"
+                    :name="item.icon"
+                    data-slot="item-leading-icon"
+                    :class="$style.itemLeadingIcon"
+                  />
+                  <Select.ItemText data-slot="item-label" :class="$style.itemLabel">
+                    {{ item.label }}
+                  </Select.ItemText>
+                  <Select.ItemIndicator as-child>
+                    <Icon :name="icons.check" data-slot="item-indicator" :class="$style.itemIndicator" />
+                  </Select.ItemIndicator>
+                </Select.Item>
+              </template>
+            </Select.Group>
+          </template>
+          <p v-else data-slot="empty" :class="$style.empty">
+            {{ locale.messages.select.empty }}
+          </p>
+        </Select.Viewport>
+      </Select.Content>
+    </Select.Portal>
+  </Select.Root>
 </template>
 
 <style module>
-.root {
+.base {
   position: relative;
 
-  display: inline-flex;
-  align-items: center;
-}
-
-.base {
   display: inline-flex;
 
   gap: calc(var(--spacing) * 1.5);
@@ -263,17 +218,17 @@ function normalizeItem(item: SelectItem): SelectItemObject {
     opacity: 75%;
   }
 
-  .variant-subtle > & {
+  &.variant-subtle {
     background-color: var(--background-color-elevated);
     box-shadow: inset 0 0 0 1px var(--border-color-accented);
   }
 
-  .variant-outline > & {
+  &.variant-outline {
     background-color: var(--background-color-default);
     box-shadow: inset 0 0 0 1px var(--border-color-accented);
   }
 
-  .disabled > & {
+  &.disabled {
     cursor: not-allowed;
 
     opacity: 75%;
@@ -311,14 +266,14 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 .content {
   pointer-events: auto;
 
-  transform-origin: var(--reka-combobox-content-transform-origin);
+  transform-origin: var(--reka-select-content-transform-origin);
 
   overflow: hidden;
   display: flex;
   flex-direction: column;
 
-  min-width: var(--reka-combobox-trigger-width);
-  max-height: var(--reka-combobox-content-available-height);
+  min-width: var(--reka-select-trigger-width);
+  max-height: var(--reka-select-content-available-height);
   border-radius: var(--radius-md);
 
   background-color: var(--background-color-default);
@@ -336,19 +291,6 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
   &[data-state="open"] {
     animation: global(scale-in) 100ms ease-out;
-  }
-
-  & > [data-slot="root"] {
-    width: 100%;
-
-    padding-block: calc(var(--spacing) * 1.5);
-    padding-inline: calc(var(--spacing) * 2.5);
-    border-bottom: 1px solid var(--border-color-default);
-
-    font-size: var(--text-sm);
-
-    background-color: var(--background-color-default);
-    outline-style: none;
   }
 }
 

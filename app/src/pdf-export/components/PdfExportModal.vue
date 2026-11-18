@@ -282,6 +282,7 @@ onMounted(async () => {
         .exportPattern(patternStore.pattern.id, "oxs")
         .then((content) => new PdfAsset({ fileName: "pattern.oxs", content })),
       ...pdf.value.files,
+      ...pdf.value.images,
     ]),
     PdfAsset.serialize([...baseFonts, ...pdf.value.fonts]),
   );
@@ -356,6 +357,7 @@ onUnmounted(() => service.destroy());
       <div :class="$style.toolbar">
         <TypstToolbar
           :current-selection="currentSelection"
+          :images="pdf.images.map((asset) => asset.fileName)"
           @toggle-heading="typstEditor?.toggleHeading"
           @toggle-bold-text="typstEditor?.toggleBoldText"
           @toggle-italic-text="typstEditor?.toggleItalicText"
@@ -363,6 +365,7 @@ onUnmounted(() => service.destroy());
           @toggle-bulleted-list="typstEditor?.toggleBulletedList"
           @toggle-numbered-list="typstEditor?.toggleNumberedList"
           @insert-link="typstEditor?.insertLink"
+          @insert-image="typstEditor?.insertImage"
         />
 
         <Button

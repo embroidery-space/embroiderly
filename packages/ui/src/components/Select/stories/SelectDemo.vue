@@ -6,13 +6,13 @@ defineOptions({ inheritAttrs: false });
 </script>
 
 <template>
-  <FormField class="select-demo">
+  <FormField id="select-demo">
     <Select v-bind="$attrs" />
   </FormField>
 </template>
 
 <style>
-.select-demo [data-slot="container"] > [data-slot="root"] {
+#select-demo [data-slot="container"] > [data-slot="base"] {
   width: calc(var(--spacing) * 48);
 }
 </style>

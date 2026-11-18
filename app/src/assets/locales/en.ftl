@@ -596,6 +596,12 @@ pdf-export-format-link-url-invalid = Invalid URL
 pdf-export-format-link-display-text = Display text
 
 pdf-export-format-image = Insert image
+pdf-export-format-image-file =
+  .label = File
+  .description = Upload your images in the Assets panel
+pdf-export-format-image-alt = Alternative description of the image
+pdf-export-format-image-file-invalid = Select the image
+
 pdf-export-format-table = Insert table
 
 pdf-export-format-insert = Insert

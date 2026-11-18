@@ -13,6 +13,7 @@ import {
   toggleFormatting,
   toggleList,
   insertLink,
+  insertImage,
 } from "../lib/codemirror/";
 import type { TypstEditorSettings } from "../lib/codemirror/";
 
@@ -112,6 +113,10 @@ defineExpose({
   insertLink(url: string, displayText?: string) {
     if (!editor.value) return;
     insertLink(editor.value, url, displayText);
+  },
+  insertImage(fileName: string, alt?: string) {
+    if (!editor.value) return;
+    insertImage(editor.value, fileName, alt);
   },
 });
 </script>

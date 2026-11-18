@@ -35,9 +35,7 @@ export default Object.freeze<Locale>({
       nextPage: "Next page",
     },
     select: {
-      search: "Search…",
-      noData: "No data",
-      noMatches: "No matches",
+      empty: "No items",
     },
     slider: {
       thumb: "Thumb",

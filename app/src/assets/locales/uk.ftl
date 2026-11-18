@@ -600,6 +600,12 @@ pdf-export-format-link-url-invalid = Некоректний URL
 pdf-export-format-link-display-text = Текст заміщення
 
 pdf-export-format-image = Вставити зображення
+pdf-export-format-image-file =
+  .label = Файл
+  .description = Завантажте ваші файли у панелі ресурсів
+pdf-export-format-image-alt = Альтернативний опис зображення
+pdf-export-format-image-file-invalid = Виберіть зображення
+
 pdf-export-format-table = Вставити таблицю
 
 pdf-export-format-insert = Вставити

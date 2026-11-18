@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, DropdownMenu, Form, FormField, Input, Popover, Separator } from "@embroiderly/ui";
+import { Button, ButtonIcon, DropdownMenu, Form, FormField, Input, Popover, Select, Separator } from "@embroiderly/ui";
 
 import { computed } from "vue";
 import z from "zod";
@@ -25,6 +25,7 @@ import {
 
 const props = defineProps<{
   currentSelection?: string;
+  images?: string[];
 }>();
 const emit = defineEmits<{
   "toggle-heading": [level: number];
@@ -37,6 +38,7 @@ const emit = defineEmits<{
   "toggle-numbered-list": [];
 
   "insert-link": [url: string, displayText?: string];
+  "insert-image": [fileName: string, alt?: string];
 }>();
 
 const currentSelectionIsURL = computed(() => z.url().validate(props.currentSelection));
@@ -125,7 +127,7 @@ const currentSelectionIsURL = computed(() => z.url().validate(props.currentSelec
               displayText: z.string().optional(),
             })
           "
-          :class="$style.linkForm"
+          :class="$style.form"
           @submit="
             ({ url, displayText }) => {
               emit('insert-link', url, displayText);
@@ -146,7 +148,45 @@ const currentSelectionIsURL = computed(() => z.url().validate(props.currentSelec
       </template>
     </Popover>
 
-    <ButtonIcon variant="ghost" color="neutral" :icon="IconFormatImage" :tooltip="$t('pdf-export-format-image')" />
+    <Popover pinned>
+      <template #default="{ open }">
+        <ButtonIcon
+          color="neutral"
+          :variant="open ? 'soft' : 'ghost'"
+          :icon="open ? IconClose : IconFormatImage"
+          :tooltip="$t('pdf-export-format-image')"
+        />
+      </template>
+
+      <template #content="{ close }">
+        <Form
+          :schema="
+            z.object({
+              fileName: z.string($t('pdf-export-format-image-file-invalid')),
+              alt: z.string().optional(),
+            })
+          "
+          :class="$style.form"
+          @submit="
+            ({ fileName, alt }) => {
+              emit('insert-image', fileName, alt);
+              close();
+            }
+          "
+        >
+          <FormField name="fileName" v-bind="$ta('pdf-export-format-image-file')">
+            <Select :items="images" />
+          </FormField>
+
+          <FormField name="alt" :label="$t('pdf-export-format-image-alt')">
+            <Input />
+          </FormField>
+
+          <Button type="submit" :label="$t('pdf-export-format-insert')" />
+        </Form>
+      </template>
+    </Popover>
+
     <ButtonIcon variant="ghost" color="neutral" :icon="IconFormatTable" :tooltip="$t('pdf-export-format-table')" />
   </div>
 </template>
@@ -160,7 +200,7 @@ const currentSelectionIsURL = computed(() => z.url().validate(props.currentSelec
   min-height: 0;
 }
 
-.link-form {
+.form {
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 2);

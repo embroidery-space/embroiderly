@@ -38,9 +38,7 @@ export type Messages = {
     nextPage: string;
   };
   select: {
-    search: string;
-    noData: string;
-    noMatches: string;
+    empty: string;
   };
   slider: {
     thumb: string;
