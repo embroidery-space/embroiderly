@@ -159,7 +159,15 @@ const currentSelectionIsURL = computed(() => z.url().validate(props.currentSelec
             <Input :default-value="currentSelectionIsURL ? undefined : currentSelection" />
           </FormField>
 
-          <Button type="submit" :label="$t('pdf-export-format-insert')" />
+          <div :class="$style.formFooter">
+            <Button type="submit" :label="$t('pdf-export-format-insert')" />
+            <Button
+              variant="link"
+              href="https://typst.app/docs/reference/model/link/"
+              target="_blank"
+              :label="$t('pdf-export-format-learn-more')"
+            />
+          </div>
         </Form>
       </template>
     </Popover>
@@ -198,7 +206,15 @@ const currentSelectionIsURL = computed(() => z.url().validate(props.currentSelec
             <Input />
           </FormField>
 
-          <Button type="submit" :label="$t('pdf-export-format-insert')" />
+          <div :class="$style.formFooter">
+            <Button type="submit" :label="$t('pdf-export-format-insert')" />
+            <Button
+              variant="link"
+              href="https://typst.app/docs/reference/visualize/image/"
+              target="blank"
+              :label="$t('pdf-export-format-learn-more')"
+            />
+          </div>
         </Form>
       </template>
     </Popover>
@@ -240,5 +256,11 @@ const currentSelectionIsURL = computed(() => z.url().validate(props.currentSelec
   width: var(--container-xs);
 
   padding: calc(var(--spacing) * 2);
+}
+
+.form-footer {
+  display: flex;
+  gap: calc(var(--spacing) * 2);
+  align-items: center;
 }
 </style>

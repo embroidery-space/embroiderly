@@ -617,6 +617,7 @@ pdf-export-format-attach-pattern-oxs-confirmation =
    Можливо, не варто поширювати платні PDF-документи з прикріпленою схемою.
 
 pdf-export-format-insert = Вставити
+pdf-export-format-learn-more = Дізнатися більше
 
 pdf-export-save-template = Зберегти шаблон
 pdf-export-save-template-failed =

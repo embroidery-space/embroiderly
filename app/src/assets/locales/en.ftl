@@ -613,6 +613,7 @@ pdf-export-format-attach-pattern-oxs-confirmation =
     You may not want to distribute paid PDFs with an attached pattern.
 
 pdf-export-format-insert = Insert
+pdf-export-format-learn-more = Learn more
 
 pdf-export-save-template = Save Template
 pdf-export-save-template-failed =
