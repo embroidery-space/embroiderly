@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import { Icon as IconifyIcon } from "@iconify/vue";
-import type { Component } from "vue";
-
 export interface IconProps {
-  /** The icon name from Iconify (e.g., "lucide:settings") or a Vue component. */
-  name: string | Component;
+  name: string;
 }
 
 defineProps<IconProps>();
 </script>
 
 <template>
-  <IconifyIcon v-if="typeof name === 'string'" :icon="name" mode="svg" />
-  <component :is="name" v-else />
+  <svg :class="$style.icon">
+    <use :href="`icons.svg#${name}`" />
+  </svg>
 </template>
+
+<style module>
+.icon {
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+}
+</style>
