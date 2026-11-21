@@ -8,21 +8,21 @@ import ToolToggleGroup from "./ToolToggleGroup.vue";
 import type { ToolToggleItem } from "./ToolToggleGroup.vue";
 
 const compactItems: ToolToggleItem[] = [
-  { icon: "lucide:square", tooltip: "Solid", value: "solid" },
-  { icon: "lucide:grid-2x2", tooltip: "Stitches", value: "stitches" },
-  { icon: "lucide:blend", tooltip: "Mixed", value: "mixed" },
+  { icon: "stitch-square", tooltip: "Solid", value: "solid" },
+  { icon: "stitch-full", tooltip: "Stitches", value: "stitches" },
+  { icon: "stitch-mix", tooltip: "Mixed", value: "mixed" },
 ];
 
 const expandedItems: ToolToggleItem[] = [
-  { icon: "lucide:square", label: "Solid", description: "View as solid squares", value: "solid" },
-  { icon: "lucide:grid-2x2", label: "Stitches", description: "View as individual stitches", value: "stitches" },
-  { icon: "lucide:blend", label: "Mixed", description: "Mixed display mode", value: "mixed" },
+  { icon: "stitch-square", label: "Solid", description: "View as solid squares", value: "solid" },
+  { icon: "stitch-full", label: "Stitches", description: "View as individual stitches", value: "stitches" },
+  { icon: "stitch-mix", label: "Mixed", description: "Mixed display mode", value: "mixed" },
 ];
 
 const itemsWithShortcuts: ToolToggleItem[] = [
-  { icon: "lucide:square", tooltip: "Solid", value: "solid", shortcut: "S" },
-  { icon: "lucide:grid-2x2", tooltip: "Stitches", value: "stitches", shortcut: "T" },
-  { icon: "lucide:blend", tooltip: "Mixed", value: "mixed", shortcut: "M" },
+  { icon: "stitch-square", tooltip: "Solid", value: "solid", shortcut: "S" },
+  { icon: "stitch-full", tooltip: "Stitches", value: "stitches", shortcut: "T" },
+  { icon: "stitch-mix", tooltip: "Mixed", value: "mixed", shortcut: "M" },
 ];
 
 const meta = {

@@ -6,7 +6,6 @@ import { computed, toRef } from "vue";
 
 import { usePortal } from "../../composables/usePortal.ts";
 import { useShortcuts, extractShortcuts } from "../../composables/useShortcuts.ts";
-import type { IconValue } from "../../types/icons.ts";
 
 import DropdownMenuContent from "./DropdownMenuContent.vue";
 
@@ -20,7 +19,7 @@ export interface DropdownMenuItem {
   description?: string;
 
   /** An icon to display before the label. */
-  icon?: IconValue;
+  icon?: string;
 
   /** Whether the checkbox item is checked. Only used when `type` is `"checkbox"`. */
   checked?: boolean;

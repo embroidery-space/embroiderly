@@ -4,8 +4,6 @@ import type { DropdownMenuContentProps } from "reka-ui";
 import { ref, computed, toRaw, useTemplateRef, watch } from "vue";
 import type { MaybeRefOrGetter } from "vue";
 
-import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-import type { IconValue } from "../../types/icons.ts";
 import DropdownMenu from "../DropdownMenu/DropdownMenu.vue";
 import type { DropdownMenuItem } from "../DropdownMenu/DropdownMenu.vue";
 import Icon from "../Icon/Icon.vue";
@@ -14,7 +12,7 @@ import type { TooltipProps } from "../Tooltip/Tooltip.vue";
 
 export interface ToolSelectItem {
   /** The icon to display. */
-  icon: IconValue;
+  icon: string;
   /** The label of the item. */
   label: string;
   /** The value of the item. */
@@ -59,8 +57,6 @@ const model = defineModel<unknown>();
 const props = withDefaults(defineProps<ToolSelectProps<T>>(), {
   portal: true,
 });
-
-const { icons } = useComponentIcons();
 
 const dropdownItems = computed<DropdownMenuItem[]>(() => {
   return props.items.map((item) => {
@@ -197,7 +193,7 @@ function handleKeydown(e: KeyboardEvent) {
         data-slot="dropdown-button"
         :class="$style.dropdownButton"
       >
-        <Icon :name="icons.chevronDown" data-slot="dropdown-button-icon" :class="$style.dropdownButtonIcon" />
+        <Icon name="chevron-down" data-slot="dropdown-button-icon" :class="$style.dropdownButtonIcon" />
       </button>
     </DropdownMenu>
   </div>

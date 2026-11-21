@@ -7,22 +7,22 @@ import Input from "../Input.vue";
   <div id="input-with-slots">
     <Input model-value="With leading slot">
       <template #leading>
-        <Icon name="lucide:rocket" />
+        <Icon name="rocket" />
       </template>
     </Input>
 
     <Input model-value="With trailing slot">
       <template #trailing>
-        <Icon name="lucide:rocket" />
+        <Icon name="rocket" />
       </template>
     </Input>
 
     <Input model-value="With both slots">
       <template #leading>
-        <Icon name="lucide:rocket" />
+        <Icon name="rocket" />
       </template>
       <template #trailing>
-        <Icon name="lucide:rocket" />
+        <Icon name="rocket" />
       </template>
     </Input>
   </div>

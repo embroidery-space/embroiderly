@@ -13,16 +13,6 @@ import type { SplitterPanelProps, SplitterPanelEmits, ToolToggleItem } from "@em
 
 import { computed, useTemplateRef, watch } from "vue";
 
-import {
-  IconClose,
-  IconGrid,
-  IconLayers,
-  IconRulers,
-  IconStitchFull,
-  IconStitchMix,
-  IconStitchSquare,
-  IconSymbols,
-} from "~/assets/icons/";
 import { CanvasLayers } from "~/components/canvas/";
 import { useI18n } from "~/composables/";
 import { DisplayMode } from "~/lib/pattern/";
@@ -56,21 +46,21 @@ const displayMode = computed({
 });
 const displayModeOptions = computed<ToolToggleItem[]>(() => [
   {
-    icon: IconStitchMix,
+    icon: "stitch-mix",
     tooltip: collapsed.value ? fluent.$t("canvas-view-mix") : undefined,
     label: collapsed.value ? undefined : fluent.$t("canvas-view-mix"),
     value: DisplayMode.Mixed,
     shortcut: "Shift+V-M",
   },
   {
-    icon: IconStitchSquare,
+    icon: "stitch-square",
     tooltip: collapsed.value ? fluent.$t("canvas-view-solid") : undefined,
     label: collapsed.value ? undefined : fluent.$t("canvas-view-solid"),
     value: DisplayMode.Solid,
     shortcut: "Shift+V-S",
   },
   {
-    icon: IconStitchFull,
+    icon: "stitch-full",
     tooltip: collapsed.value ? fluent.$t("canvas-view-stitches") : undefined,
     label: collapsed.value ? undefined : fluent.$t("canvas-view-stitches"),
     value: DisplayMode.Stitches,
@@ -127,7 +117,7 @@ watch(collapsed, (value) => {
       <ToolToggle
         v-model="showSymbols"
         shortcut="Shift+S"
-        :icon="IconSymbols"
+        icon="symbols"
         :tooltip="collapsed ? $t('canvas-symbols') : undefined"
         :label="collapsed ? undefined : fluent.$t('canvas-symbols')"
         :disabled="disabled"
@@ -137,7 +127,7 @@ watch(collapsed, (value) => {
       <ToolToggle
         v-model="showGrid"
         shortcut="Shift+G"
-        :icon="IconGrid"
+        icon="grid"
         :tooltip="collapsed ? $t('canvas-grid') : undefined"
         :label="collapsed ? undefined : $t('canvas-grid')"
         :disabled="disabled"
@@ -147,7 +137,7 @@ watch(collapsed, (value) => {
       <ToolToggle
         v-model="showRulers"
         shortcut="Shift+R"
-        :icon="IconRulers"
+        icon="rulers"
         :tooltip="collapsed ? $t('canvas-rulers') : undefined"
         :label="collapsed ? undefined : $t('canvas-rulers')"
         :disabled="disabled"
@@ -174,7 +164,7 @@ watch(collapsed, (value) => {
           <ButtonIcon
             color="neutral"
             :variant="open ? 'soft' : 'ghost'"
-            :icon="open ? IconClose : IconLayers"
+            :icon="open ? 'close' : 'layers'"
             :disabled="disabled"
             :tooltip="$t('canvas-layers')"
             side="left"

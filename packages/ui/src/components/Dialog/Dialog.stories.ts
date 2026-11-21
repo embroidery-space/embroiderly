@@ -8,10 +8,6 @@ import DialogOpen from "./stories/DialogOpen.vue";
 const meta = {
   title: "Overlay/Dialog",
   component: Dialog,
-  argTypes: {
-    title: { control: "text" },
-    description: { control: "text" },
-  },
 } satisfies Meta<typeof Dialog>;
 
 export default meta;

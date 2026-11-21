@@ -4,7 +4,6 @@ import type { AcceptableValue, ListboxRootProps } from "reka-ui";
 import { Listbox } from "reka-ui/namespaced";
 import { computed } from "vue";
 
-import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import Icon from "../Icon/Icon.vue";
 import Input from "../Input/Input.vue";
@@ -70,7 +69,6 @@ const emit = defineEmits<ListboxEmits<T>>();
 defineSlots<ListboxSlots>();
 
 const locale = useLocale();
-const { icons } = useComponentIcons();
 
 const filterInputProps = computed<InputProps>(() =>
   defu(typeof props.filterInput === "object" ? props.filterInput : {}, {
@@ -162,7 +160,7 @@ function compareValues(a: any, b: any): boolean {
                   {{ item.label ?? String(item.value) }}
                 </span>
                 <Listbox.ItemIndicator>
-                  <Icon :name="icons.check" data-slot="item-indicator" :class="$style.itemIndicator" />
+                  <Icon name="check" data-slot="item-indicator" :class="$style.itemIndicator" />
                 </Listbox.ItemIndicator>
               </slot>
             </Listbox.Item>

@@ -12,7 +12,6 @@ import type { ContextMenuItem, DropdownMenuItem, SplitterPanelProps, SplitterPan
 
 import { computed, reactive, ref, useTemplateRef, watch } from "vue";
 
-import { IconCheck, IconMenu, IconPalette } from "~/assets/icons/";
 import { PaletteCatalog, PaletteDisplaySettings, PaletteList, PaletteListItem } from "~/components/palette/";
 import { StitchSymbols } from "~/components/symbols/";
 import { useI18n } from "~/composables/";
@@ -380,7 +379,7 @@ async function updatePaletteDisplaySettings() {
           >
             <Button
               data-tour="palette-save"
-              :icon="IconCheck"
+              icon="check"
               :label="$t('palette-save')"
               :class="$style.save"
               @click="
@@ -390,7 +389,7 @@ async function updatePaletteDisplaySettings() {
               "
             />
             <DropdownMenu :items="palettePanelsMenuOptions" :content="{ align: 'end' }">
-              <Button :icon="IconMenu" :aria-label="$t('palette-panel-menu')" />
+              <Button icon="menu" :aria-label="$t('palette-panel-menu')" />
             </DropdownMenu>
           </div>
           <div v-else :class="[$style.info, { [$style.collapsed]: collapsed }]" @contextmenu.stop.prevent>
@@ -402,8 +401,8 @@ async function updatePaletteDisplaySettings() {
               data-tour="palette-edit"
               variant="ghost"
               color="neutral"
+              icon="palette"
               :disabled="disabled"
-              :icon="IconPalette"
               :tooltip="$t('palette-edit')"
               :delay-duration="200"
               :class="{ [$style.rainbow]: paletteIsEmpty && !disabled }"

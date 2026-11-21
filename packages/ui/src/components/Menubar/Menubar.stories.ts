@@ -6,8 +6,6 @@ import type { MenubarMenu } from "./Menubar.vue";
 import MenubarDemo from "./stories/MenubarDemo.vue";
 import MenubarOpen from "./stories/MenubarOpen.vue";
 
-const sizes = ["sm", "md", "lg"] as const;
-
 const demoMenus: MenubarMenu[] = [
   {
     label: "File",
@@ -31,9 +29,9 @@ const demoMenus: MenubarMenu[] = [
         { label: "Redo", shortcut: "Ctrl+Shift+Z" },
       ],
       [
-        { icon: "lucide:scissors", label: "Cut", shortcut: "Ctrl+X" },
-        { icon: "lucide:copy", label: "Copy", shortcut: "Ctrl+C" },
-        { icon: "lucide:clipboard", label: "Paste", shortcut: "Ctrl+V" },
+        { icon: "content:scissors", label: "Cut", shortcut: "Ctrl+X" },
+        { icon: "content:copy", label: "Copy", shortcut: "Ctrl+C" },
+        { icon: "content:clipboard", label: "Paste", shortcut: "Ctrl+V" },
       ],
     ],
   },
@@ -67,9 +65,6 @@ const meta = {
   title: "Navigation/Menubar",
   // @ts-expect-error `Menubar` is a generic component.
   component: Menubar,
-  argTypes: {
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof Menubar>;
 
 export default meta;

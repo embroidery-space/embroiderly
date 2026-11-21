@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { Icon } from "@embroiderly/ui";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 import { ref } from "vue";
 
-import { IconWindowClose, IconWindowMaximize, IconWindowMinimize, IconWindowRestore } from "~/assets/icons/";
 import { useTauriListener } from "~/composables/tauri/";
 
 const appWindow = getCurrentWebviewWindow();
@@ -23,7 +23,7 @@ useTauriListener(async () => {
 <template>
   <div :class="$style.root">
     <button :title="$t('window-minimize')" :class="$style.button" @click="appWindow.minimize()">
-      <IconWindowMinimize :class="$style.icon" />
+      <Icon name="window-minimize" :class="$style.icon" />
     </button>
 
     <button
@@ -31,12 +31,12 @@ useTauriListener(async () => {
       :class="$style.button"
       @click="appWindow.toggleMaximize()"
     >
-      <IconWindowRestore v-if="isMaximized" :class="$style.icon" />
-      <IconWindowMaximize v-else :class="$style.icon" />
+      <Icon v-if="isMaximized" name="window-restore" :class="$style.icon" />
+      <Icon v-else name="window-maximize" :class="$style.icon" />
     </button>
 
     <button :title="$t('window-close')" :class="[$style.button, $style.close]" @click="appWindow.close()">
-      <IconWindowClose :class="$style.icon" />
+      <Icon name="window-close" :class="$style.icon" />
     </button>
   </div>
 </template>

@@ -4,8 +4,6 @@ import type { TreeItemSelectEvent, TreeItemToggleEvent, TreeRootProps } from "re
 import { Tree } from "reka-ui/namespaced";
 import { computed } from "vue";
 
-import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-import type { IconValue } from "../../types/icons.ts";
 import Button from "../Button/Button.vue";
 import Icon from "../Icon/Icon.vue";
 
@@ -15,7 +13,7 @@ export interface TreeItem {
   /** Unique identifier; falls back to `label` if not provided. */
   value?: string;
   /** Leading icon. */
-  icon?: IconValue;
+  icon?: string;
 
   /** Whether the item is disabled. */
   disabled?: boolean;
@@ -89,8 +87,6 @@ defineSlots<TreeSlots<T>>();
 
 const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate<{ item: T; index: number; level: number }>();
 const [DefineTreeTemplate, ReuseTreeTemplate] = createReusableTemplate<{ items: T[]; level: number }>();
-
-const { icons } = useComponentIcons();
 
 const defaultExpanded = computed<string[]>(() => {
   const keys = new Set<string>(props.defaultExpanded ?? []);
@@ -226,7 +222,7 @@ function handleItemToggle(e: TreeItemToggleEvent<T>) {
             color="neutral"
             variant="ghost"
             size="sm"
-            :icon="icons.chevronDown"
+            icon="chevron-down"
             :disabled="isDisabled"
             tabindex="-1"
             data-slot="item-chevron"

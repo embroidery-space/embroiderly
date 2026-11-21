@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Menubar } from "reka-ui/namespaced";
 
-import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { getLinkRel, isExternalHref } from "../../utils/link.ts";
 import { parseShortcutDisplay } from "../../utils/shortcut.ts";
 import Icon from "../Icon/Icon.vue";
@@ -25,8 +24,6 @@ interface MenubarContentInternalProps {
 withDefaults(defineProps<MenubarContentInternalProps>(), {
   sub: false,
 });
-
-const { icons } = useComponentIcons();
 
 function normalizeChildren(children: MenubarItem[] | MenubarItem[][]): MenubarItem[][] {
   if (!children?.length) return [];
@@ -70,11 +67,7 @@ function normalizeChildren(children: MenubarItem[] | MenubarItem[][]): MenubarIt
         >
           <span data-slot="item-label" :class="$style.itemLabel">{{ item.label }}</span>
           <Menubar.ItemIndicator as-child>
-            <Icon
-              :name="icons.check"
-              data-slot="item-trailing-icon"
-              :class="[$style.itemTrailing, $style.itemTrailingIcon]"
-            />
+            <Icon name="check" data-slot="item-trailing-icon" :class="[$style.itemTrailing, $style.itemTrailingIcon]" />
           </Menubar.ItemIndicator>
         </Menubar.CheckboxItem>
 
@@ -96,7 +89,7 @@ function normalizeChildren(children: MenubarItem[] | MenubarItem[][]): MenubarIt
             </span>
 
             <span v-if="isExternalHref(item.href)" data-slot="item-trailing" :class="$style.itemTrailing">
-              <Icon :name="icons.external" data-slot="item-trailing-icon" :class="$style.itemTrailingIcon" />
+              <Icon name="link-external" data-slot="item-trailing-icon" :class="$style.itemTrailingIcon" />
             </span>
           </a>
         </Menubar.Item>
@@ -106,7 +99,7 @@ function normalizeChildren(children: MenubarItem[] | MenubarItem[][]): MenubarIt
             <Icon v-if="item.icon" :name="item.icon" data-slot="item-leading-icon" :class="$style.itemLeadingIcon" />
             <span data-slot="item-label" :class="$style.itemLabel">{{ item.label }}</span>
             <span data-slot="item-trailing" :class="$style.itemTrailing">
-              <Icon :name="icons.chevronRight" data-slot="item-trailing-icon" :class="$style.itemTrailingIcon" />
+              <Icon name="chevron-right" data-slot="item-trailing-icon" :class="$style.itemTrailingIcon" />
             </span>
           </Menubar.SubTrigger>
 
@@ -128,7 +121,7 @@ function normalizeChildren(children: MenubarItem[] | MenubarItem[][]): MenubarIt
         >
           <Icon
             v-if="item.loading"
-            :name="icons.loading"
+            name="loader-circle"
             data-slot="item-leading-icon"
             :class="[$style.itemLeadingIcon, $style.loading]"
           />

@@ -6,7 +6,6 @@ import { refAutoReset } from "@vueuse/core";
 import { useFluent } from "fluent-vue";
 import { computed } from "vue";
 
-import { IconCheck, IconLaptop, IconMoon, IconSun } from "~/assets/icons/";
 import { useEditor, useI18n } from "~/composables/";
 import { LayerLayout, WheelAction } from "~/lib/types/";
 import { StartupAction, useSettingsStore } from "~/settings/";
@@ -29,9 +28,9 @@ const tabs = computed<TabsItem[]>(() => [
 
 const themeIcon = computed(() => themeOptions.value.find((item) => item!.value === settingsStore.ui.theme)?.icon);
 const themeOptions = computed(() => [
-  { label: i18n.fluent.$t("settings-theme-dark"), value: "dark", icon: IconMoon },
-  { label: i18n.fluent.$t("settings-theme-light"), value: "light", icon: IconSun },
-  { label: i18n.fluent.$t("settings-theme-system"), value: "system", icon: IconLaptop },
+  { label: i18n.fluent.$t("settings-theme-dark"), value: "dark", icon: "moon" },
+  { label: i18n.fluent.$t("settings-theme-light"), value: "light", icon: "sun" },
+  { label: i18n.fluent.$t("settings-theme-system"), value: "system", icon: "laptop" },
 ]);
 const scaleOptions = computed(() => [
   { label: i18n.fluent.$t("settings-scale-xx-small"), value: "xx-small" },
@@ -187,7 +186,7 @@ async function reset() {
       <Button
         color="neutral"
         variant="link"
-        :icon="settingsReset ? IconCheck : undefined"
+        :icon="settingsReset ? 'check' : undefined"
         :label="$t('settings-reset')"
         @click="reset"
       />

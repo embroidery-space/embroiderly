@@ -5,7 +5,6 @@ import type { TreeItem } from "@embroiderly/ui";
 import { computed, h } from "vue";
 import type { Component } from "vue";
 
-import { IconPlus, IconTrash } from "~/assets/icons/";
 import { useFilePicker, useI18n } from "~/composables/";
 import { PdfAsset } from "~/lib/pattern/";
 
@@ -39,7 +38,7 @@ const fontItems = computed<AssetTreeItem[]>(() => [
         color: "neutral",
         variant: "ghost",
         size: "sm",
-        icon: IconTrash,
+        icon: "trash",
         tooltip: fluent.$t("pdf-export-assets-remove-file"),
         async onClick(e) {
           e.stopPropagation();
@@ -52,7 +51,7 @@ const fontItems = computed<AssetTreeItem[]>(() => [
       color: "neutral",
       variant: "ghost",
       size: "sm",
-      icon: IconPlus,
+      icon: "plus",
       tooltip: fluent.$t("pdf-export-assets-add-files"),
       async onClick(e) {
         e.stopPropagation();
@@ -71,7 +70,7 @@ const fontItems = computed<AssetTreeItem[]>(() => [
         color: "neutral",
         variant: "ghost",
         size: "sm",
-        icon: IconTrash,
+        icon: "trash",
         tooltip: fluent.$t("pdf-export-assets-remove-file"),
         async onClick(e) {
           e.stopPropagation();
@@ -84,7 +83,7 @@ const fontItems = computed<AssetTreeItem[]>(() => [
       color: "neutral",
       variant: "ghost",
       size: "sm",
-      icon: IconPlus,
+      icon: "plus",
       tooltip: fluent.$t("pdf-export-assets-add-files"),
       async onClick(e) {
         e.stopPropagation();

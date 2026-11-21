@@ -1,5 +1,15 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, Dialog, Input, InputColor, useConfirm, useShortcuts, useToast } from "@embroiderly/ui";
+import {
+  Button,
+  ButtonIcon,
+  Dialog,
+  Icon,
+  Input,
+  InputColor,
+  useConfirm,
+  useShortcuts,
+  useToast,
+} from "@embroiderly/ui";
 
 import { useManualRefHistory } from "@vueuse/core";
 import { insertNodeAt, removeNode, useSortable } from "@vueuse/integrations/useSortable";
@@ -8,7 +18,6 @@ import { useFluent } from "fluent-vue";
 import { v4 as uuidv4 } from "uuid";
 import { computed, nextTick, ref, toRaw, useTemplateRef, watch } from "vue";
 
-import { IconDragHandle, IconPlus, IconTrash } from "~/assets/icons/";
 import { useEditor } from "~/composables/";
 import { serializeFabricColors } from "~/lib/pattern/";
 import type { FabricColor } from "~/lib/pattern/";
@@ -151,7 +160,7 @@ async function handleSave() {
       <div ref="rows" :class="$style.rows">
         <div v-for="row in working" :key="row.id" :class="$style.row">
           <span data-drag-handle :class="$style.handle">
-            <IconDragHandle :class="$style.handleIcon" />
+            <Icon name="drag-handle" :class="$style.handleIcon" />
           </span>
 
           <InputColor
@@ -169,7 +178,7 @@ async function handleSave() {
           />
 
           <ButtonIcon
-            :icon="IconTrash"
+            icon="trash"
             variant="ghost"
             color="neutral"
             :tooltip="$t('fabric-colors-delete')"
@@ -191,7 +200,7 @@ async function handleSave() {
         <Button
           variant="outline"
           color="neutral"
-          :icon="IconPlus"
+          icon="plus"
           :label="$t('fabric-colors-add')"
           :class="$style.add"
           @click="addColor"

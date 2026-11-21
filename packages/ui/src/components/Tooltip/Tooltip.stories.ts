@@ -4,19 +4,9 @@ import { expect } from "storybook/test";
 import TooltipDemo from "./stories/TooltipDemo.vue";
 import Tooltip from "./Tooltip.vue";
 
-const sides = ["top", "right", "bottom", "left"] as const;
-const aligns = ["start", "center", "end"] as const;
-
 const meta = {
   title: "Overlay/Tooltip",
   component: Tooltip,
-  argTypes: {
-    text: { control: "text" },
-    shortcut: { control: "text" },
-    side: { control: "select", options: sides },
-    align: { control: "select", options: aligns },
-    delayDuration: { control: "number" },
-  },
 } satisfies Meta<typeof Tooltip>;
 
 export default meta;

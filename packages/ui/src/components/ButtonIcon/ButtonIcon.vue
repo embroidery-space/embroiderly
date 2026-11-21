@@ -2,7 +2,6 @@
 import { computed } from "vue";
 
 import { useShortcuts } from "../../composables/useShortcuts.ts";
-import type { IconValue } from "../../types/icons.ts";
 import Button from "../Button/Button.vue";
 import type { ButtonProps } from "../Button/Button.vue";
 import Tooltip from "../Tooltip/Tooltip.vue";
@@ -13,7 +12,7 @@ export interface ButtonIconProps
     Omit<ButtonProps, "label" | "leadingIcon" | "trailingIcon" | "leading" | "trailing" | "square">,
     Pick<TooltipProps, "delayDuration" | "shortcut"> {
   /** The icon to display. */
-  icon: IconValue;
+  icon: string;
   /** The tooltip text. */
   tooltip: string;
 

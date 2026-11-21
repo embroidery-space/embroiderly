@@ -2,7 +2,6 @@
 import { NumberField } from "reka-ui/namespaced";
 import { computed } from "vue";
 
-import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import Button from "../Button/Button.vue";
 
@@ -57,9 +56,11 @@ const props = withDefaults(defineProps<InputNumberProps>(), {
 
   increment: true,
   decrement: true,
+
+  incrementIcon: "chevron-up",
+  decrementIcon: "chevron-down",
 });
 
-const { icons } = useComponentIcons();
 const locale = useLocale();
 
 const hasButtons = computed(() => props.increment || props.decrement);
@@ -85,7 +86,7 @@ const hasButtons = computed(() => props.increment || props.decrement);
           square
           color="neutral"
           variant="link"
-          :icon="incrementIcon ?? icons.chevronUp"
+          :icon="incrementIcon"
           :aria-label="locale.messages.inputNumber.increment"
         />
       </NumberField.Increment>
@@ -95,7 +96,7 @@ const hasButtons = computed(() => props.increment || props.decrement);
           square
           color="neutral"
           variant="link"
-          :icon="decrementIcon ?? icons.chevronDown"
+          :icon="decrementIcon"
           :aria-label="locale.messages.inputNumber.decrement"
         />
       </NumberField.Decrement>

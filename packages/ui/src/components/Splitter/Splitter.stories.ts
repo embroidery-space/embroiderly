@@ -5,14 +5,9 @@ import SplitterCollapsible from "./stories/SplitterCollapsible.vue";
 import SplitterDemo from "./stories/SplitterDemo.vue";
 import SplitterNested from "./stories/SplitterNested.vue";
 
-const directions = ["horizontal", "vertical"] as const;
-
 const meta = {
   title: "Layout/Splitter",
   component: Splitter,
-  argTypes: {
-    direction: { control: "select", options: directions },
-  },
 } satisfies Meta<typeof Splitter>;
 
 export default meta;

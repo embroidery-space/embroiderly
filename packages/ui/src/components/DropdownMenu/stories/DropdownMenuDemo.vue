@@ -7,6 +7,6 @@ defineOptions({ inheritAttrs: false });
 
 <template>
   <DropdownMenu v-bind="$attrs">
-    <Button icon="lucide:menu" label="Open menu" />
+    <Button icon="menu" label="Open menu" />
   </DropdownMenu>
 </template>

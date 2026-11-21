@@ -20,14 +20,14 @@ const items: SelectItem[] = [
 const richItems: SelectItem[][] = [
   [
     { type: "label", label: "Active" },
-    { label: "Backlog", value: "backlog", icon: "lucide:circle-dashed" },
-    { label: "Todo", value: "todo", icon: "lucide:circle" },
-    { label: "In Progress", value: "in-progress", icon: "lucide:circle-half" },
+    { label: "Backlog", value: "backlog" },
+    { label: "Todo", value: "todo" },
+    { label: "In Progress", value: "in-progress" },
   ],
   [
     { type: "label", label: "Closed" },
-    { label: "Done", value: "done", icon: "lucide:circle-check" },
-    { label: "Cancelled", value: "cancelled", icon: "lucide:circle-x", disabled: true },
+    { label: "Done", value: "done" },
+    { label: "Cancelled", value: "cancelled", disabled: true },
   ],
 ];
 

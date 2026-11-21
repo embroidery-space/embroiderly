@@ -4,11 +4,11 @@ import Icon from "../Icon.vue";
 
 <template>
   <div id="icon-sizes">
-    <Icon name="lucide:rocket" class="icon-4" />
-    <Icon name="lucide:rocket" class="icon-6" />
-    <Icon name="lucide:rocket" class="icon-8" />
-    <Icon name="lucide:rocket" class="icon-12" />
-    <Icon name="lucide:rocket" class="icon-16" />
+    <Icon name="rocket" class="icon-4" />
+    <Icon name="rocket" class="icon-6" />
+    <Icon name="rocket" class="icon-8" />
+    <Icon name="rocket" class="icon-12" />
+    <Icon name="rocket" class="icon-16" />
   </div>
 </template>
 

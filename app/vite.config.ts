@@ -4,8 +4,6 @@ import { fileURLToPath, URL } from "node:url";
 
 import vue from "@vitejs/plugin-vue";
 import { webdriverio } from "@vitest/browser-webdriverio";
-import { FileSystemIconLoader } from "unplugin-icons/loaders";
-import icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import vueDevTools from "vite-plugin-vue-devtools";
@@ -29,13 +27,6 @@ const git = getGitInfo();
 export default defineConfig({
   plugins: [
     vue(),
-    icons({
-      compiler: "vue3",
-      customCollections: {
-        stitches: FileSystemIconLoader("./src/assets/icons/stitches"),
-        window: FileSystemIconLoader("./src/assets/icons/window"),
-      },
-    }),
     cssModulesOptimizer(),
     !isTauri && wasmOptimizer(),
     !isTauri &&

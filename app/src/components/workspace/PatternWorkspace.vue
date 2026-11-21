@@ -4,15 +4,6 @@ import type { ContextMenuItem, ToolSelectItem } from "@embroiderly/ui";
 
 import { computed, useTemplateRef, watch } from "vue";
 
-import {
-  IconImage,
-  IconImageOff,
-  IconStitchBack,
-  IconStitchFrenchKnot,
-  IconStitchHalf,
-  IconStitchPetite,
-  IconStitchQuarter,
-} from "~/assets/icons/";
 import { PatternCanvas } from "~/components/canvas/";
 import type { PatternCanvasProps } from "~/components/canvas/";
 import { useEditor, useFilePicker, useI18n, useToolItems } from "~/composables/";
@@ -57,27 +48,27 @@ const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => {
         children: [
           toContextMenuItem(fullstitches.value[0]!),
           {
-            icon: IconStitchPetite,
+            icon: "stitch-petite",
             label: fluent.$t("stitch-petite"),
             children: petitestitches.value.map(toContextMenuItem),
           },
           {
-            icon: IconStitchHalf,
+            icon: "stitch-half",
             label: fluent.$t("stitch-half"),
             children: halfstitches.value.map(toContextMenuItem),
           },
           {
-            icon: IconStitchQuarter,
+            icon: "stitch-quarter",
             label: fluent.$t("stitch-quarter"),
             children: quarterstitches.value.map(toContextMenuItem),
           },
           {
-            icon: IconStitchBack,
+            icon: "stitch-back",
             label: fluent.$t("stitch-line"),
             children: linestitches.value.map(toContextMenuItem),
           },
           {
-            icon: IconStitchFrenchKnot,
+            icon: "stitch-french-knot",
             label: fluent.$t("stitch-node"),
             children: nodestitches.value.map(toContextMenuItem),
           },
@@ -90,7 +81,7 @@ const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => {
         label: fluent.$t("canvas-ctx-menu-image"),
         children: [
           {
-            icon: IconImage,
+            icon: "image",
             label: fluent.$t("canvas-ctx-menu-image-set"),
             async onSelect() {
               const handle = await filePicker.open({
@@ -101,7 +92,7 @@ const canvasContextMenuOptions = computed<ContextMenuItem[][]>(() => {
             },
           },
           {
-            icon: IconImageOff,
+            icon: "image-off",
             label: fluent.$t("canvas-ctx-menu-image-remove"),
             color: "error",
             disabled: !patternStore.pattern.referenceImage,

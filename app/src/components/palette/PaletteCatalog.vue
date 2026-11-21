@@ -6,7 +6,6 @@ import { useFuse } from "@vueuse/integrations/useFuse";
 import { useTemplateRef, ref, computed, shallowRef } from "vue";
 import type { Ref } from "vue";
 
-import { IconMenu } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { BrandPaletteItem, PaletteItem, PaletteSettings } from "~/lib/pattern/";
 import { LoggerService, MetricsService } from "~/services/";
@@ -128,7 +127,7 @@ function handlePaletteCatalogOptionDoubleClick(option: BrandPaletteItem) {
               :loading="importingPalettes"
               color="neutral"
               variant="outline"
-              :icon="IconMenu"
+              icon="menu"
             />
           </DropdownMenu>
         </div>

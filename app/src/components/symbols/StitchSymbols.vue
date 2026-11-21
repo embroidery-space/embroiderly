@@ -4,7 +4,6 @@ import type { ContextMenuItem, DropdownMenuItem, SelectItem } from "@embroiderly
 
 import { computed, onMounted, ref, shallowRef } from "vue";
 
-import { IconMenu } from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { LoggerService, MetricsService } from "~/services/";
 import { addSymbolFonts } from "~/utils/font-face.ts";
@@ -202,7 +201,7 @@ onMounted(async () => {
                 :loading="importingFonts"
                 color="neutral"
                 variant="outline"
-                :icon="IconMenu"
+                icon="menu"
               />
             </DropdownMenu>
           </div>

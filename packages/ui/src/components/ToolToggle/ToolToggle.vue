@@ -2,7 +2,6 @@
 import { Field, Toggle } from "reka-ui/namespaced";
 
 import { useShortcuts } from "../../composables/useShortcuts.ts";
-import type { IconValue } from "../../types/icons.ts";
 import Icon from "../Icon/Icon.vue";
 import Tooltip from "../Tooltip/Tooltip.vue";
 import type { TooltipProps } from "../Tooltip/Tooltip.vue";
@@ -14,7 +13,7 @@ export interface ToolToggleProps extends Pick<TooltipProps, "delayDuration"> {
   description?: string;
 
   /** The icon to display. */
-  icon: IconValue;
+  icon: string;
 
   /** Keyboard shortcut displayed in tooltip. */
   shortcut?: string;

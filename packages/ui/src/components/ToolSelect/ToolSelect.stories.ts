@@ -8,11 +8,11 @@ import ToolSelectStates from "./stories/ToolSelectStates.vue";
 import ToolSelect from "./ToolSelect.vue";
 import type { ToolSelectItem } from "./ToolSelect.vue";
 
-const singleItem: ToolSelectItem[] = [{ label: "Pencil", icon: "lucide:pencil", value: "pencil" }];
+const singleItem: ToolSelectItem[] = [{ label: "Pencil", icon: "edit", value: "pencil" }];
 const multipleItems: ToolSelectItem[] = [
-  { label: "Pencil", icon: "lucide:pencil", value: "pencil", shortcut: "P" },
-  { label: "Eraser", icon: "lucide:eraser", value: "eraser", shortcut: "E" },
-  { label: "Brush", icon: "lucide:brush", value: "brush", shortcut: "B" },
+  { label: "Full Stitch", icon: "stitch-full", value: "full", shortcut: "F" },
+  { label: "Half Stitch", icon: "stitch-half", value: "half", shortcut: "H" },
+  { label: "back Stitch", icon: "stitch-back", value: "back", shortcut: "B" },
 ];
 
 const meta = {

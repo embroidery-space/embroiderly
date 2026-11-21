@@ -6,9 +6,6 @@ import IconSizes from "./stories/IconSizes.vue";
 const meta = {
   title: "Element/Icon",
   component: Icon,
-  argTypes: {
-    name: { control: "text" },
-  },
 } satisfies Meta<typeof Icon>;
 
 export default meta;
@@ -17,12 +14,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Demo: Story = {
   args: {
-    name: "lucide:lightbulb",
+    name: "rocket",
   },
 };
 
 export const Sizes: Story = {
-  args: { name: "lucide:rocket" },
+  args: { name: "palette" },
   render: () => ({
     components: { IconSizes },
     template: `<IconSizes />`,

@@ -4,10 +4,8 @@ import { useFilter } from "reka-ui";
 import { Combobox } from "reka-ui/namespaced";
 import { computed, ref, toRef } from "vue";
 
-import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import { usePortal } from "../../composables/usePortal.ts";
-import type { IconValue } from "../../types/icons.ts";
 import Icon from "../Icon/Icon.vue";
 import Input from "../Input/Input.vue";
 import type { InputProps } from "../Input/Input.vue";
@@ -22,7 +20,7 @@ export interface SelectItemObject {
   value?: string | number;
 
   /** An icon to display before the label. */
-  icon?: IconValue;
+  icon?: string;
 
   /** Whether the item is disabled. */
   disabled?: boolean;
@@ -81,7 +79,6 @@ const props = withDefaults(defineProps<SelectProps<T>>(), {
   portal: true,
 });
 
-const { icons } = useComponentIcons();
 const { contains } = useFilter({ sensitivity: "base" });
 const locale = useLocale();
 
@@ -154,11 +151,11 @@ function normalizeItem(item: SelectItem): SelectItemObject {
 
         <Icon
           v-if="loading"
-          :name="icons.loading"
+          name="loader-circle"
           data-slot="trailing-icon"
           :class="[$style.trailingIcon, $style.loading]"
         />
-        <Icon v-else :name="icons.chevronDown" data-slot="trailing-icon" :class="$style.trailingIcon" />
+        <Icon v-else name="chevron-down" data-slot="trailing-icon" :class="$style.trailingIcon" />
       </Combobox.Trigger>
     </Combobox.Anchor>
 
@@ -208,7 +205,7 @@ function normalizeItem(item: SelectItem): SelectItemObject {
                   {{ item.label }}
                 </span>
                 <Combobox.ItemIndicator>
-                  <Icon :name="icons.check" data-slot="item-indicator" :class="$style.itemIndicator" />
+                  <Icon name="check" data-slot="item-indicator" :class="$style.itemIndicator" />
                 </Combobox.ItemIndicator>
               </Combobox.Item>
             </template>

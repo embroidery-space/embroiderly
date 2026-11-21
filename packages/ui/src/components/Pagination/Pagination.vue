@@ -3,7 +3,6 @@ import { useForwardPropsEmits } from "reka-ui";
 import type { PaginationRootEmits, PaginationRootProps } from "reka-ui";
 import { Pagination } from "reka-ui/namespaced";
 
-import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import Button from "../Button/Button.vue";
 import ButtonIcon from "../ButtonIcon/ButtonIcon.vue";
@@ -16,7 +15,6 @@ const emit = defineEmits<PaginationEmits>();
 
 const forwarded = useForwardPropsEmits(props, emit);
 
-const { icons } = useComponentIcons();
 const locale = useLocale();
 </script>
 
@@ -29,7 +27,7 @@ const locale = useLocale();
             square
             variant="outline"
             color="neutral"
-            :icon="icons.chevronsLeft"
+            icon="chevrons-left"
             data-slot="first"
             :tooltip="locale.messages.pagination.firstPage"
           />
@@ -40,7 +38,7 @@ const locale = useLocale();
             square
             variant="outline"
             color="neutral"
-            :icon="icons.chevronLeft"
+            icon="chevron-left"
             data-slot="prev"
             :tooltip="locale.messages.pagination.prevPage"
           />
@@ -62,7 +60,7 @@ const locale = useLocale();
               square
               variant="outline"
               color="neutral"
-              :icon="icons.ellipsis"
+              icon="ellipsis"
               :disabled="disabled"
               data-slot="ellipsis"
             />
@@ -74,7 +72,7 @@ const locale = useLocale();
             square
             variant="outline"
             color="neutral"
-            :icon="icons.chevronRight"
+            icon="chevron-right"
             data-slot="next"
             :tooltip="locale.messages.pagination.nextPage"
           />
@@ -85,7 +83,7 @@ const locale = useLocale();
             square
             variant="outline"
             color="neutral"
-            :icon="icons.chevronsRight"
+            icon="chevrons-right"
             data-slot="last"
             :tooltip="locale.messages.pagination.lastPage"
           />

@@ -3,26 +3,8 @@ import { App, useOverlay, useToast } from "@embroiderly/ui";
 
 import { useEventListener, useLocalStorage, useParentElement } from "@vueuse/core";
 import { randomInt } from "es-toolkit";
-import { onMounted, onErrorCaptured, markRaw, watch } from "vue";
+import { onMounted, onErrorCaptured, watch } from "vue";
 import type { ShallowRef } from "vue";
-
-import {
-  IconCheck,
-  IconChevronUp,
-  IconChevronDown,
-  IconChevronLeft,
-  IconChevronRight,
-  IconChevronsLeft,
-  IconChevronsRight,
-  IconClose,
-  IconLoaderCircle,
-  IconLink,
-  IconUnlink,
-  IconMinus,
-  IconPlus,
-  IconEllipsis,
-  IconExternalLink,
-} from "~/assets/icons/";
 
 import AppHeader from "./components/AppHeader.vue";
 import AppMain from "./components/AppMain.vue";
@@ -94,27 +76,7 @@ onErrorCaptured((err, _component, info) => {
 </script>
 
 <template>
-  <App
-    :locale="currentLocale"
-    :icons="{
-      check: markRaw(IconCheck),
-      chevronUp: markRaw(IconChevronUp),
-      chevronDown: markRaw(IconChevronDown),
-      chevronLeft: markRaw(IconChevronLeft),
-      chevronRight: markRaw(IconChevronRight),
-      chevronsLeft: markRaw(IconChevronsLeft),
-      chevronsRight: markRaw(IconChevronsRight),
-      close: markRaw(IconClose),
-      ellipsis: markRaw(IconEllipsis),
-      external: markRaw(IconExternalLink),
-      loading: markRaw(IconLoaderCircle),
-      link: markRaw(IconLink),
-      unlink: markRaw(IconUnlink),
-      minus: markRaw(IconMinus),
-      plus: markRaw(IconPlus),
-    }"
-    :shortcuts="{ target: appElement }"
-  >
+  <App :locale="currentLocale" :shortcuts="{ target: appElement }">
     <AppHeader :class="$style.header" />
     <AppMain :class="$style.main" />
   </App>

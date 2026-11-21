@@ -7,14 +7,12 @@ import type { ContextMenuItem } from "./ContextMenu.vue";
 import ContextMenuDemo from "./stories/ContextMenuDemo.vue";
 import ContextMenuOpen from "./stories/ContextMenuOpen.vue";
 
-const sizes = ["sm", "md", "lg"] as const;
-
 function demoItems(showGrid: { value: boolean }, showRulers: { value: boolean }): ContextMenuItem[][] {
   return [
     [
-      { icon: "lucide:scissors", label: "Cut", shortcut: "Ctrl+X" },
-      { icon: "lucide:copy", label: "Copy", shortcut: "Ctrl+C" },
-      { icon: "lucide:clipboard", label: "Paste", shortcut: "Ctrl+V", disabled: true },
+      { icon: "content-scissors", label: "Cut", shortcut: "Ctrl+X" },
+      { icon: "content-copy", label: "Copy", shortcut: "Ctrl+C" },
+      { icon: "content-clipboard", label: "Paste", shortcut: "Ctrl+V", disabled: true },
     ],
     [
       { type: "label", label: "View" },
@@ -66,9 +64,6 @@ const meta = {
   title: "Overlay/ContextMenu",
   // @ts-expect-error `ContextMenu` is a generic component.
   component: ContextMenu,
-  argTypes: {
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof ContextMenu>;
 
 export default meta;

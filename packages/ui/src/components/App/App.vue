@@ -3,14 +3,11 @@ import { ConfigProvider, TooltipProvider } from "reka-ui";
 import type { TooltipProviderProps } from "reka-ui";
 import { provide, toRef, useId } from "vue";
 
-import { iconsInjectionKey } from "../../composables/useComponentIcons.ts";
 import { localeInjectionKey } from "../../composables/useLocale.ts";
 import { GLOBAL_PORTAL, PORTAL_TARGET_INJECTION_KEY } from "../../composables/usePortal.ts";
 import { provideShortcutsContext } from "../../composables/useShortcuts.ts";
 import type { ShortcutsOptions } from "../../composables/useShortcuts.ts";
-import { DEFAULT_ICONS } from "../../icons.ts";
 import { locales } from "../../locales/index.ts";
-import type { Icons } from "../../types/icons.ts";
 import Toaster from "../Toast/Toaster.vue";
 import type { ToasterProps } from "../Toast/Toaster.vue";
 
@@ -29,8 +26,6 @@ export interface AppProps {
    * @default "en"
    */
   locale?: string;
-  /** Icons override. */
-  icons?: Partial<Icons>;
 
   portal?: boolean | string | HTMLElement;
 }
@@ -49,9 +44,6 @@ provideShortcutsContext(() => props.shortcuts);
 
 const locale = toRef(() => locales[props.locale]!);
 provide(localeInjectionKey, locale);
-
-const icons = toRef(() => ({ ...DEFAULT_ICONS, ...props.icons }));
-provide(iconsInjectionKey, icons);
 
 const portal = toRef(() => props.portal);
 provide(PORTAL_TARGET_INJECTION_KEY, portal);
