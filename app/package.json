@@ -62,8 +62,6 @@
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@iconify-json/material-symbols": "catalog:",
-    "@iconify-json/mdi": "catalog:",
     "@pinia/testing": "catalog:",
     "@pixi/devtools": "catalog:",
     "@tsconfig/node24": "catalog:",
@@ -83,7 +81,6 @@
     "@wdio/visual-service": "catalog:",
     "concurrently": "catalog:",
     "typescript": "catalog:",
-    "unplugin-icons": "catalog:",
     "vite": "catalog:",
     "vite-plugin-pwa": "catalog:",
     "vite-plugin-vue-devtools": "catalog:",

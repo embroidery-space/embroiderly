@@ -24,8 +24,6 @@
     "vue-component-type-helpers": "catalog:"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "catalog:",
-    "@iconify/vue": "catalog:",
     "@storybook/addon-docs": "catalog:",
     "@storybook/addon-vitest": "catalog:",
     "@storybook/vue3-vite": "catalog:",
