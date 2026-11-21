@@ -1,0 +1,590 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <!-- UI -->
+  <defs>
+    <symbol id="check" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:check-rounded -->
+      <path
+        fill="currentColor"
+        d="m9.55 15.15l8.475-8.475q.3-.3.7-.3t.7.3t.3.713t-.3.712l-9.175 9.2q-.3.3-.7.3t-.7-.3L4.55 13q-.3-.3-.288-.712t.313-.713t.713-.3t.712.3z"
+      ></path>
+    </symbol>
+
+    <symbol id="chevron-up" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:keyboard-arrow-up-rounded -->
+      <path
+        fill="currentColor"
+        d="m12 10.8l-3.9 3.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.6-4.6q.3-.3.7-.3t.7.3l4.6 4.6q.275.275.275.7t-.275.7t-.7.275t-.7-.275z"
+      ></path>
+    </symbol>
+
+    <symbol id="chevron-down" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:keyboard-arrow-down-rounded -->
+      <path
+        fill="currentColor"
+        d="M11.625 14.913q-.175-.063-.325-.213l-4.6-4.6q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l3.9 3.9l3.9-3.9q.275-.275.7-.275t.7.275t.275.7t-.275.7l-4.6 4.6q-.15.15-.325.213t-.375.062t-.375-.062"
+      ></path>
+    </symbol>
+
+    <symbol id="chevron-left" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:keyboard-arrow-left-rounded -->
+      <path
+        fill="currentColor"
+        d="m10.8 12l3.9 3.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-4.6-4.6q-.15-.15-.212-.325T8.425 12t.063-.375t.212-.325l4.6-4.6q.275-.275.7-.275t.7.275t.275.7t-.275.7z"
+      ></path>
+    </symbol>
+
+    <symbol id="chevron-right" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:keyboard-arrow-right-rounded -->
+      <path
+        fill="currentColor"
+        d="M12.6 12L8.7 8.1q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.6 4.6q.15.15.213.325t.062.375t-.062.375t-.213.325l-4.6 4.6q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7z"
+      ></path>
+    </symbol>
+
+    <symbol id="chevrons-left" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:keyboard-double-arrow-left-rounded -->
+      <path
+        fill="currentColor"
+        d="m7.825 12l3.875 3.9q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275l-4.6-4.6q-.15-.15-.213-.325T5.426 12t.063-.375t.212-.325l4.6-4.6q.275-.275.688-.287t.712.287q.275.275.275.7t-.275.7zm6.6 0l3.875 3.9q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275l-4.6-4.6q-.15-.15-.213-.325T12.026 12t.063-.375t.212-.325l4.6-4.6q.275-.275.688-.287t.712.287q.275.275.275.7t-.275.7z"
+      ></path>
+    </symbol>
+
+    <symbol id="chevrons-right" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:keyboard-double-arrow-right-rounded -->
+      <path
+        fill="currentColor"
+        d="M9.575 12L5.7 8.1q-.275-.275-.288-.687T5.7 6.7q.275-.275.7-.275t.7.275l4.6 4.6q.15.15.213.325t.062.375t-.062.375t-.213.325l-4.6 4.6q-.275.275-.687.288T5.7 17.3q-.275-.275-.275-.7t.275-.7zm6.6 0L12.3 8.1q-.275-.275-.288-.687T12.3 6.7q.275-.275.7-.275t.7.275l4.6 4.6q.15.15.213.325t.062.375t-.062.375t-.213.325l-4.6 4.6q-.275.275-.687.288T12.3 17.3q-.275-.275-.275-.7t.275-.7z"
+      ></path>
+    </symbol>
+
+    <symbol id="code" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:code-rounded -->
+      <path
+        fill="currentColor"
+        d="M4.825 12.025L8.7 15.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-4.6-4.6q-.15-.15-.213-.325T2.426 12t.063-.375t.212-.325l4.6-4.6q.3-.3.713-.3t.712.3t.3.713t-.3.712zm14.35-.05L15.3 8.1q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.6 4.6q.15.15.213.325t.062.375t-.062.375t-.213.325l-4.6 4.6q-.3.3-.7.288t-.7-.313t-.3-.712t.3-.713z"
+      ></path>
+    </symbol>
+
+    <symbol id="cursor" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:arrow-selector-tool-rounded -->
+      <path
+        fill="currentColor"
+        d="M15.15 21.375q-.575.275-1.15.063t-.85-.788l-3-6.45l-2.325 3.25q-.425.6-1.125.375t-.7-.95V4.05q0-.625.563-.9t1.062.125l10.1 7.95q.575.425.338 1.1T17.1 13h-4.2l2.975 6.375q.275.575.063 1.15t-.788.85"
+      ></path>
+    </symbol>
+
+    <symbol id="download" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:download-rounded -->
+      <path
+        fill="currentColor"
+        d="M11.625 15.513q-.175-.063-.325-.213l-3.6-3.6q-.3-.3-.288-.7t.288-.7q.3-.3.713-.312t.712.287L11 12.15V5q0-.425.288-.712T12 4t.713.288T13 5v7.15l1.875-1.875q.3-.3.713-.288t.712.313q.275.3.288.7t-.288.7l-3.6 3.6q-.15.15-.325.213t-.375.062t-.375-.062M6 20q-.825 0-1.412-.587T4 18v-2q0-.425.288-.712T5 15t.713.288T6 16v2h12v-2q0-.425.288-.712T19 15t.713.288T20 16v2q0 .825-.587 1.413T18 20z"
+      ></path>
+    </symbol>
+
+    <symbol id="ellipsis" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/mdi?icon=mdi:dots-horizontal -->
+      <path
+        fill="currentColor"
+        d="M16 12a2 2 0 0 1 2-2a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2m-6 0a2 2 0 0 1 2-2a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2m-6 0a2 2 0 0 1 2-2a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2"
+      ></path>
+    </symbol>
+
+    <symbol id="link" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:link-rounded -->
+      <path
+        fill="currentColor"
+        d="M7 17q-2.075 0-3.537-1.463T2 12t1.463-3.537T7 7h3q.425 0 .713.288T11 8t-.288.713T10 9H7q-1.25 0-2.125.875T4 12t.875 2.125T7 15h3q.425 0 .713.288T11 16t-.288.713T10 17zm2-4q-.425 0-.712-.288T8 12t.288-.712T9 11h6q.425 0 .713.288T16 12t-.288.713T15 13zm5 4q-.425 0-.712-.288T13 16t.288-.712T14 15h3q1.25 0 2.125-.875T20 12t-.875-2.125T17 9h-3q-.425 0-.712-.288T13 8t.288-.712T14 7h3q2.075 0 3.538 1.463T22 12t-1.463 3.538T17 17z"
+      ></path>
+    </symbol>
+
+    <symbol id="unlink" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:link-off-rounded -->
+      <path
+        fill="currentColor"
+        d="M15.625 12.775L13.85 11H15q.425 0 .713.288T16 12q0 .25-.1.45t-.275.325M20.5 21.9q-.275.275-.7.275t-.7-.275l-17-17q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l17 17q.275.275.275.7t-.275.7M7 17q-2.075 0-3.537-1.463T2 12q0-1.725 1.05-3.075t2.7-1.775L7.6 9H7q-1.25 0-2.125.875T4 12t.875 2.125T7 15h3q.425 0 .713.288T11 16t-.288.713T10 17zm2-4q-.425 0-.712-.288T8 12t.288-.712T9 11h.625l1.975 2zm9.5 2.8q-.225-.35-.162-.75t.412-.625q.575-.425.913-1.05T20 12q0-1.25-.875-2.125T17 9h-3q-.425 0-.712-.288T13 8t.288-.712T14 7h3q2.075 0 3.538 1.463T22 12q0 1.225-.562 2.288t-1.563 1.762q-.35.225-.75.163T18.5 15.8"
+      ></path>
+    </symbol>
+
+    <symbol id="link-external" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:open-in-new-rounded -->
+      <path
+        fill="currentColor"
+        d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h6q.425 0 .713.288T12 4t-.288.713T11 5H5v14h14v-6q0-.425.288-.712T20 12t.713.288T21 13v6q0 .825-.587 1.413T19 21zM19 6.4L10.4 15q-.275.275-.7.275T9 15t-.275-.7t.275-.7L17.6 5H15q-.425 0-.712-.288T14 4t.288-.712T15 3h5q.425 0 .713.288T21 4v5q0 .425-.288.713T20 10t-.712-.288T19 9z"
+      ></path>
+    </symbol>
+
+    <symbol id="file" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:draft-rounded -->
+      <path
+        fill="currentColor"
+        d="M6 22q-.825 0-1.412-.587T4 20V4q0-.825.588-1.412T6 2h7.175q.4 0 .763.15t.637.425l4.85 4.85q.275.275.425.638t.15.762V20q0 .825-.587 1.413T18 22zm7-14q0 .425.288.713T14 9h4l-5-5z"
+      ></path>
+    </symbol>
+
+    <symbol id="file-create" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:edit-document-rounded -->
+      <path
+        fill="currentColor"
+        d="M6 22q-.825 0-1.412-.587T4 20V4q0-.825.588-1.412T6 2h7.175q.4 0 .763.15t.637.425l4.85 4.85q.275.275.425.638t.15.762V10.4q0 .275-.162.475t-.413.3q-.4.15-.763.388T18 12.1l-5.4 5.4q-.275.275-.437.638T12 18.9V21q0 .425-.288.713T11 22zm8-1v-1.65q0-.2.075-.387t.225-.338l5.225-5.2q.225-.225.5-.325t.55-.1q.3 0 .575.113t.5.337l.925.925q.2.225.313.5t.112.55t-.1.563t-.325.512l-5.2 5.2q-.15.15-.337.225T16.65 22H15q-.425 0-.712-.287T14 21m6.575-4.6l.925-.975l-.925-.925l-.95.95zM14 9h4l-5-5l5 5l-5-5v4q0 .425.288.713T14 9"
+      ></path>
+    </symbol>
+
+    <symbol id="file-open" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:file-open-rounded -->
+      <path
+        fill="currentColor"
+        d="M18 16h3.65q.425 0 .713.288t.287.712t-.287.713t-.713.287H20.4l2.25 2.25q.275.275.275.688t-.275.712q-.3.3-.712.3t-.713-.3L19 19.425v1.225q0 .425-.288.713T18 21.65t-.712-.287T17 20.65V17q0-.425.288-.712T18 16M13 4v4q0 .425.288.713T14 9h4zM6 2h7.175q.4 0 .763.15t.637.425l4.85 4.85q.275.275.425.638t.15.762V13q0 .425-.288.713T19 14h-3q-.425 0-.712.288T15 15v6q0 .425-.288.713T14 22H6q-.825 0-1.412-.587T4 20V4q0-.825.588-1.412T6 2"
+      ></path>
+    </symbol>
+
+    <symbol id="file-storage" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:home-storage-rounded -->
+      <path
+        fill="currentColor"
+        d="M6.7 21q-.725 0-1.287-.475t-.688-1.2L3.2 10.175q-.075-.45.213-.812T4.175 9h15.65q.475 0 .763.363t.212.812l-1.525 9.15q-.125.725-.687 1.2T17.3 21zm3.3-6h4q.425 0 .713-.288T15 14t-.288-.712T14 13h-4q-.425 0-.712.288T9 14t.288.713T10 15M6 8q-.425 0-.712-.288T5 7t.288-.712T6 6h12q.425 0 .713.288T19 7t-.288.713T18 8zm2-3q-.425 0-.712-.288T7 4t.288-.712T8 3h8q.425 0 .713.288T17 4t-.288.713T16 5z"
+      ></path>
+    </symbol>
+
+    <symbol id="image" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:image-rounded -->
+      <path
+        fill="currentColor"
+        d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm2-4h10q.3 0 .45-.275t-.05-.525l-2.75-3.675q-.15-.2-.4-.2t-.4.2L11.25 16L9.4 13.525q-.15-.2-.4-.2t-.4.2l-2 2.675q-.2.25-.05.525T7 17"
+      ></path>
+    </symbol>
+
+    <symbol id="image-off" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:hide-image-rounded -->
+      <path
+        fill="currentColor"
+        d="M21 5v10.725q0 .35-.175.575t-.45.35t-.55.088t-.525-.288L7.55 4.7q-.25-.25-.287-.525t.087-.55t.35-.45T8.275 3H19q.825 0 1.413.587T21 5M5 21q-.825 0-1.412-.587T3 19V5.8l-.9-.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l17 17q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-.9-.9zm9.175-4l-2.1-2.1l-.825 1.1l-1.85-2.475q-.15-.2-.4-.2t-.4.2l-2 2.675q-.2.25-.05.525T7 17z"
+      ></path>
+    </symbol>
+
+    <symbol id="layers" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:stacks-rounded -->
+      <path
+        fill="currentColor"
+        d="M11.513 13.663q-.238-.063-.463-.188l-8.45-4.6q-.275-.15-.388-.375T2.1 8t.113-.5t.387-.375l8.45-4.6q.225-.125.463-.188T12 2.275t.488.063t.462.187l8.45 4.6q.275.15.388.375t.112.5t-.112.5t-.388.375l-8.45 4.6q-.225.125-.462.188t-.488.062t-.488-.062M12 15.725l7.85-4.275q.05-.025.475-.125q.425 0 .713.288t.287.712q0 .275-.125.5t-.4.375l-7.85 4.275q-.225.125-.462.188t-.488.062t-.488-.062t-.462-.188L3.2 13.2q-.275-.15-.4-.375t-.125-.5q0-.425.288-.712t.712-.288q.125 0 .238.038t.237.087zm0 4l7.85-4.275q.05-.025.475-.125q.425 0 .713.288t.287.712q0 .275-.125.5t-.4.375l-7.85 4.275q-.225.125-.462.188t-.488.062t-.488-.062t-.462-.188L3.2 17.2q-.275-.15-.4-.375t-.125-.5q0-.425.288-.712t.712-.288q.125 0 .238.038t.237.087z"
+      ></path>
+    </symbol>
+
+    <symbol id="visibility" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:visibility-rounded -->
+      <path
+        fill="currentColor"
+        d="M15.188 14.688Q16.5 13.375 16.5 11.5t-1.312-3.187T12 7T8.813 8.313T7.5 11.5t1.313 3.188T12 16t3.188-1.312m-5.1-1.276Q9.3 12.625 9.3 11.5t.788-1.912T12 8.8t1.913.788t.787 1.912t-.787 1.913T12 14.2t-1.912-.787m-4.2 3.787q-2.763-1.8-4.363-4.75q-.125-.225-.187-.462t-.063-.488t.063-.488t.187-.462q1.6-2.95 4.363-4.75T12 4t6.113 1.8t4.362 4.75q.125.225.188.463t.062.487t-.062.488t-.188.462q-1.6 2.95-4.362 4.75T12 19t-6.113-1.8"
+      ></path>
+    </symbol>
+
+    <symbol id="visibility-off" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:visibility-off-rounded -->
+      <path
+        fill="currentColor"
+        d="m19.1 21.9l-3.5-3.45q-.875.275-1.775.413T12 19q-3.35 0-6.125-1.8t-4.35-4.75q-.125-.225-.187-.462t-.063-.488t.063-.488t.187-.462q.55-.975 1.175-1.9T4.15 7L2.075 4.9Q1.8 4.625 1.8 4.213t.3-.713q.275-.275.7-.275t.7.275l17 17q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275M12 16q.275 0 .525-.025t.5-.1l-5.4-5.4q-.075.25-.1.5T7.5 11.5q0 1.875 1.313 3.188T12 16m0-12q3.35 0 6.138 1.813t4.362 4.762q.125.2.188.438t.062.487t-.05.488t-.175.437q-.475.925-1.062 1.75t-1.313 1.55q-.35.35-.825.325t-.825-.375l-2-2q-.175-.175-.225-.413t.025-.487q.1-.325.15-.625t.05-.65q0-1.875-1.312-3.187T12 7q-.35 0-.65.05t-.625.15q-.25.075-.5.025T9.8 7l-.825-.825q-.475-.475-.312-1.1t.787-.8q.625-.125 1.263-.2T12 4m1.975 5.65q.275.325.462.713t.238.812q.025.2-.15.275t-.325-.075l-2.05-2.05Q12 9.175 12.088 9t.287-.175q.475.05.875.263t.725.562"
+      ></path>
+    </symbol>
+
+    <symbol id="trash" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:delete-rounded -->
+      <path
+        fill="currentColor"
+        d="M7 21q-.825 0-1.412-.587T5 19V6q-.425 0-.712-.288T4 5t.288-.712T5 4h4q0-.425.288-.712T10 3h4q.425 0 .713.288T15 4h4q.425 0 .713.288T20 5t-.288.713T19 6v13q0 .825-.587 1.413T17 21zm3.713-4.288Q11 16.426 11 16V9q0-.425-.288-.712T10 8t-.712.288T9 9v7q0 .425.288.713T10 17t.713-.288m4 0Q15 16.426 15 16V9q0-.425-.288-.712T14 8t-.712.288T13 9v7q0 .425.288.713T14 17t.713-.288"
+      ></path>
+    </symbol>
+
+    <symbol id="drag-handle" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:drag-indicator -->
+      <path
+        fill="currentColor"
+        d="M9 20q-.825 0-1.412-.587T7 18t.588-1.412T9 16t1.413.588T11 18t-.587 1.413T9 20m6 0q-.825 0-1.412-.587T13 18t.588-1.412T15 16t1.413.588T17 18t-.587 1.413T15 20m-6-6q-.825 0-1.412-.587T7 12t.588-1.412T9 10t1.413.588T11 12t-.587 1.413T9 14m6 0q-.825 0-1.412-.587T13 12t.588-1.412T15 10t1.413.588T17 12t-.587 1.413T15 14M9 8q-.825 0-1.412-.587T7 6t.588-1.412T9 4t1.413.588T11 6t-.587 1.413T9 8m6 0q-.825 0-1.412-.587T13 6t.588-1.412T15 4t1.413.588T17 6t-.587 1.413T15 8"
+      ></path>
+    </symbol>
+
+    <symbol id="loader-circle" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:progress-activity -->
+      <path
+        fill="currentColor"
+        d="M8.125 21.213q-1.825-.788-3.187-2.15t-2.15-3.188T2 11.988t.788-3.875t2.15-3.175t3.187-2.15T12 2q.425 0 .713.288T13 3t-.288.713T12 4Q8.675 4 6.337 6.338T4 12t2.338 5.663T12 20t5.663-2.337T20 12q0-.425.288-.712T21 11t.713.288T22 12q0 2.05-.788 3.875t-2.15 3.188t-3.175 2.15t-3.875.787t-3.887-.787"
+      ></path>
+    </symbol>
+
+    <symbol id="menu" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:menu-rounded -->
+      <path
+        fill="currentColor"
+        d="M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z"
+      ></path>
+    </symbol>
+
+    <symbol id="minus" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:remove-rounded -->
+      <path
+        fill="currentColor"
+        d="M6 13q-.425 0-.712-.288T5 12t.288-.712T6 11h12q.425 0 .713.288T19 12t-.288.713T18 13z"
+      ></path>
+    </symbol>
+
+    <symbol id="plus" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:add-rounded -->
+      <path
+        fill="currentColor"
+        d="M11 13H6q-.425 0-.712-.288T5 12t.288-.712T6 11h5V6q0-.425.288-.712T12 5t.713.288T13 6v5h5q.425 0 .713.288T19 12t-.288.713T18 13h-5v5q0 .425-.288.713T12 19t-.712-.288T11 18z"
+      ></path>
+    </symbol>
+
+    <symbol id="search" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:search-rounded -->
+      <path
+        fill="currentColor"
+        d="M9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l5.6 5.6q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-5.6-5.6q-.75.6-1.725.95T9.5 16m0-2q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"
+      ></path>
+    </symbol>
+
+    <symbol id="settings" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:settings-rounded -->
+      <path
+        fill="currentColor"
+        d="M10.825 22q-.675 0-1.162-.45t-.588-1.1L8.85 18.8q-.325-.125-.612-.3t-.563-.375l-1.55.65q-.625.275-1.25.05t-.975-.8l-1.175-2.05q-.35-.575-.2-1.225t.675-1.075l1.325-1Q4.5 12.5 4.5 12.337v-.675q0-.162.025-.337l-1.325-1Q2.675 9.9 2.525 9.25t.2-1.225L3.9 5.975q.35-.575.975-.8t1.25.05l1.55.65q.275-.2.575-.375t.6-.3l.225-1.65q.1-.65.588-1.1T10.825 2h2.35q.675 0 1.163.45t.587 1.1l.225 1.65q.325.125.613.3t.562.375l1.55-.65q.625-.275 1.25-.05t.975.8l1.175 2.05q.35.575.2 1.225t-.675 1.075l-1.325 1q.025.175.025.338v.674q0 .163-.05.338l1.325 1q.525.425.675 1.075t-.2 1.225l-1.2 2.05q-.35.575-.975.8t-1.25-.05l-1.5-.65q-.275.2-.575.375t-.6.3l-.225 1.65q-.1.65-.587 1.1t-1.163.45zm1.225-6.5q1.45 0 2.475-1.025T15.55 12t-1.025-2.475T12.05 8.5q-1.475 0-2.488 1.025T8.55 12t1.013 2.475T12.05 15.5"
+      ></path>
+    </symbol>
+
+    <symbol id="sun" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:sunny-rounded -->
+      <path
+        fill="currentColor"
+        d="M11.288 4.713Q11 4.425 11 4V2q0-.425.288-.712T12 1t.713.288T13 2v2q0 .425-.288.713T12 5t-.712-.288M16.95 7.05q-.275-.275-.275-.687t.275-.713l1.4-1.425q.3-.3.712-.3t.713.3q.275.275.275.7t-.275.7L18.35 7.05q-.275.275-.7.275t-.7-.275M20 13q-.425 0-.713-.288T19 12t.288-.712T20 11h2q.425 0 .713.288T23 12t-.288.713T22 13zm-8.712 9.713Q11 22.425 11 22v-2q0-.425.288-.712T12 19t.713.288T13 20v2q0 .425-.288.713T12 23t-.712-.288M5.65 7.05l-1.425-1.4q-.3-.3-.3-.725t.3-.7q.275-.275.7-.275t.7.275L7.05 5.65q.275.275.275.7t-.275.7q-.3.275-.7.275t-.7-.275m12.7 12.725l-1.4-1.425q-.275-.3-.275-.712t.275-.688t.688-.275t.712.275l1.425 1.4q.3.275.288.7t-.288.725q-.3.3-.725.3t-.7-.3M2 13q-.425 0-.712-.288T1 12t.288-.712T2 11h2q.425 0 .713.288T5 12t-.288.713T4 13zm2.225 6.775q-.275-.275-.275-.7t.275-.7L5.65 16.95q.275-.275.687-.275t.713.275q.3.3.3.713t-.3.712l-1.4 1.4q-.3.3-.725.3t-.7-.3M7.75 16.25Q6 14.5 6 12t1.75-4.25T12 6t4.25 1.75T18 12t-1.75 4.25T12 18t-4.25-1.75"
+      ></path>
+    </symbol>
+
+    <symbol id="moon" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:nightlight-rounded -->
+      <path
+        fill="currentColor"
+        d="M14 22q-2.075 0-3.9-.788t-3.175-2.137T4.788 15.9T4 12t.788-3.9t2.137-3.175T10.1 2.788T14 2q.875 0 1.75.175t1.675.525q.3.125.45.387t.15.538q0 .225-.088.425t-.287.35q-1.75 1.375-2.7 3.375T14 12q0 2.25.925 4.25t2.7 3.35q.2.15.288.363T18 20.4q0 .275-.15.538t-.45.387q-.8.35-1.662.513T14 22"
+      ></path>
+    </symbol>
+
+    <symbol id="laptop" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:computer-rounded -->
+      <path
+        fill="currentColor"
+        d="M2 21q-.425 0-.712-.288T1 20t.288-.712T2 19h20q.425 0 .713.288T23 20t-.288.713T22 21zm2-3q-.825 0-1.412-.587T2 16V5q0-.825.588-1.412T4 3h16q.825 0 1.413.588T22 5v11q0 .825-.587 1.413T20 18z"
+      ></path>
+    </symbol>
+
+    <symbol id="undo" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:undo-rounded -->
+      <path
+        fill="currentColor"
+        d="M8 19q-.425 0-.712-.288T7 18t.288-.712T8 17h6.1q1.575 0 2.738-1T18 13.5T16.838 11T14.1 10H7.8l1.9 1.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275L4.7 9.7q-.15-.15-.213-.325T4.426 9t.063-.375T4.7 8.3l3.6-3.6q.275-.275.7-.275t.7.275t.275.7t-.275.7L7.8 8h6.3q2.425 0 4.163 1.575T20 13.5t-1.737 3.925T14.1 19z"
+      ></path>
+    </symbol>
+
+    <symbol id="redo" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:redo-rounded -->
+      <path
+        fill="currentColor"
+        d="M16.2 10H9.9q-1.575 0-2.738 1T6 13.5T7.163 16T9.9 17H16q.425 0 .713.288T17 18t-.288.713T16 19H9.9q-2.425 0-4.163-1.575T4 13.5t1.738-3.925T9.9 8h6.3l-1.9-1.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l3.6 3.6q.15.15.213.325t.062.375t-.062.375t-.213.325l-3.6 3.6q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7z"
+      ></path>
+    </symbol>
+
+    <symbol id="edit" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:edit-rounded -->
+      <path
+        fill="currentColor"
+        d="M4 21q-.425 0-.712-.288T3 20v-2.425q0-.4.15-.763t.425-.637L16.2 3.575q.3-.275.663-.425t.762-.15t.775.15t.65.45L20.425 5q.3.275.437.65T21 6.4q0 .4-.138.763t-.437.662l-12.6 12.6q-.275.275-.638.425t-.762.15zM17.6 7.8L19 6.4L17.6 5l-1.4 1.4z"
+      ></path>
+    </symbol>
+
+    <symbol id="close" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:close-rounded -->
+      <path
+        fill="currentColor"
+        d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z"
+      ></path>
+    </symbol>
+
+    <symbol id="fullscreen" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:fullscreen-rounded -->
+      <path
+        fill="currentColor"
+        d="M5 19h2q.425 0 .713.288T8 20t-.288.713T7 21H4q-.425 0-.712-.288T3 20v-3q0-.425.288-.712T4 16t.713.288T5 17zm14 0v-2q0-.425.288-.712T20 16t.713.288T21 17v3q0 .425-.288.713T20 21h-3q-.425 0-.712-.288T16 20t.288-.712T17 19zM5 5v2q0 .425-.288.713T4 8t-.712-.288T3 7V4q0-.425.288-.712T4 3h3q.425 0 .713.288T8 4t-.288.713T7 5zm14 0h-2q-.425 0-.712-.288T16 4t.288-.712T17 3h3q.425 0 .713.288T21 4v3q0 .425-.288.713T20 8t-.712-.288T19 7z"
+      ></path>
+    </symbol>
+
+    <symbol id="fullscreen-exit" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:fullscreen-exit-rounded -->
+      <path
+        fill="currentColor"
+        d="M6 18H4q-.425 0-.712-.288T3 17t.288-.712T4 16h3q.425 0 .713.288T8 17v3q0 .425-.288.713T7 21t-.712-.288T6 20zm12 0v2q0 .425-.288.713T17 21t-.712-.288T16 20v-3q0-.425.288-.712T17 16h3q.425 0 .713.288T21 17t-.288.713T20 18zM6 6V4q0-.425.288-.712T7 3t.713.288T8 4v3q0 .425-.288.713T7 8H4q-.425 0-.712-.288T3 7t.288-.712T4 6zm12 0h2q.425 0 .713.288T21 7t-.288.713T20 8h-3q-.425 0-.712-.288T16 7V4q0-.425.288-.712T17 3t.713.288T18 4z"
+      ></path>
+    </symbol>
+
+    <symbol id="zoom-in" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:zoom-in-rounded -->
+      <path
+        fill="currentColor"
+        d="M8.5 10.5h-1q-.425 0-.712-.288T6.5 9.5t.288-.712T7.5 8.5h1v-1q0-.425.288-.712T9.5 6.5t.713.288t.287.712v1h1q.425 0 .713.288t.287.712t-.288.713t-.712.287h-1v1q0 .425-.288.713T9.5 12.5t-.712-.288T8.5 11.5zm1 5.5q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l5.6 5.6q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-5.6-5.6q-.75.6-1.725.95T9.5 16m0-2q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"
+      ></path>
+    </symbol>
+
+    <symbol id="zoom-out" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:zoom-out-rounded -->
+      <path
+        fill="currentColor"
+        d="M8 10.5q-.425 0-.712-.288T7 9.5t.288-.712T8 8.5h3q.425 0 .713.288T12 9.5t-.288.713T11 10.5zM9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l5.6 5.6q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-5.6-5.6q-.75.6-1.725.95T9.5 16m0-2q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"
+      ></path>
+    </symbol>
+
+    <symbol id="panel-left-open" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:left-panel-open-rounded -->
+      <path
+        fill="currentColor"
+        d="M12.5 9.2v5.6q0 .35.3.475t.55-.125l2.45-2.45q.3-.3.3-.7t-.3-.7l-2.45-2.45q-.25-.25-.55-.125t-.3.475M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm5-2h9V5h-9z"
+      ></path>
+    </symbol>
+
+    <symbol id="panel-left-close" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:left-panel-close-rounded -->
+      <path
+        fill="currentColor"
+        d="M16.5 14.8V9.2q0-.35-.3-.475t-.55.125L13.2 11.3q-.3.3-.3.7t.3.7l2.45 2.45q.25.25.55.125t.3-.475M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm5-2h9V5h-9z"
+      ></path>
+    </symbol>
+
+    <symbol id="panel-right-open" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:right-panel-open-rounded -->
+      <path
+        fill="currentColor"
+        d="M11.5 14.8V9.2q0-.35-.3-.475t-.55.125L8.2 11.3q-.3.3-.3.7t.3.7l2.45 2.45q.25.25.55.125t.3-.475M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm9-2V5H5v14z"
+      ></path>
+    </symbol>
+
+    <symbol id="panel-right-close" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:right-panel-close-rounded -->
+      <path
+        fill="currentColor"
+        d="M7.5 14.8q0 .35.3.475t.55-.125l2.45-2.45q.3-.3.3-.7t-.3-.7L8.35 8.85q-.25-.25-.55-.125t-.3.475zM5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm9-2V5H5v14z"
+      ></path>
+    </symbol>
+
+    <symbol id="palette" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:palette -->
+      <path
+        fill="currentColor"
+        d="M12 22q-2.05 0-3.875-.788t-3.187-2.15t-2.15-3.187T2 12q0-2.075.813-3.9t2.2-3.175T8.25 2.788T12.2 2q2 0 3.775.688t3.113 1.9t2.125 2.875T22 11.05q0 2.875-1.75 4.413T16 17h-1.85q-.225 0-.312.125t-.088.275q0 .3.375.863t.375 1.287q0 1.25-.687 1.85T12 22m-4.425-9.425Q8 12.15 8 11.5t-.425-1.075T6.5 10t-1.075.425T5 11.5t.425 1.075T6.5 13t1.075-.425m3-4Q11 8.15 11 7.5t-.425-1.075T9.5 6t-1.075.425T8 7.5t.425 1.075T9.5 9t1.075-.425m5 0Q16 8.15 16 7.5t-.425-1.075T14.5 6t-1.075.425T13 7.5t.425 1.075T14.5 9t1.075-.425m3 4Q19 12.15 19 11.5t-.425-1.075T17.5 10t-1.075.425T16 11.5t.425 1.075T17.5 13t1.075-.425"
+      ></path>
+    </symbol>
+
+    <symbol id="symbols" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:emoji-symbols-rounded -->
+      <path
+        fill="currentColor"
+        d="M10 4H4q-.425 0-.712-.288T3 3t.288-.712T4 2h6q.425 0 .713.288T11 3t-.288.713T10 4M6 7H4q-.425 0-.712-.288T3 6t.288-.712T4 5h6q.425 0 .713.288T11 6t-.288.713T10 7H8v3q0 .425-.288.713T7 11t-.712-.288T6 10zm8.4 13.9q-.275.275-.7.275T13 20.9t-.275-.7t.275-.7l6.4-6.4q.275-.275.7-.275t.7.275t.275.7t-.275.7zm-.975-5.325Q13 15.15 13 14.5t.425-1.075T14.5 13t1.075.425T16 14.5t-.425 1.075T14.5 16t-1.075-.425m5 5Q18 20.15 18 19.5t.425-1.075T19.5 18t1.075.425T21 19.5t-.425 1.075T19.5 21t-1.075-.425m-4.687-10.312Q13 9.525 13 8.5t.738-1.787T15.5 5.95q.3 0 .538.038t.462.112V3q0-.425.288-.712T17.5 2H20q.425 0 .713.288T21 3t-.288.713T20 4h-2v4.5q0 1.025-.737 1.763T15.5 11t-1.763-.737M5.5 22q-1.025 0-1.763-.763T3 19.45q0-.45.188-.912t.562-.838l1.05-1.05l-.35-.35q-.375-.375-.562-.813T3.7 14.55q0-1.025.738-1.763T6.2 12.05t1.763.738t.737 1.762q0 .5-.162.938T8 16.3l-.35.35l.7.7l.675-.675q.3-.3.713-.288t.712.313q.275.3.288.7t-.288.7l-.7.7l.7.7q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-.7-.7l-1.05 1.05q-.375.375-.837.563T5.5 22m.7-6.75l.35-.35q.075-.075.113-.15t.037-.2q0-.225-.15-.363t-.35-.137t-.35.138t-.15.362q0 .075.037.175t.113.175zM5.45 20q.075 0 .2-.038t.2-.112l1.1-1.05l-.7-.7l-1.1 1.05q-.075.075-.112.175T5 19.55q0 .2.125.325T5.45 20"
+      ></path>
+    </symbol>
+
+    <symbol id="grid" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:grid-4x4-rounded -->
+      <path
+        fill="currentColor"
+        d="M5 19H3q-.425 0-.712-.288T2 18t.288-.712T3 17h2v-4H3q-.425 0-.712-.288T2 12t.288-.712T3 11h2V7H3q-.425 0-.712-.288T2 6t.288-.712T3 5h2V3q0-.425.288-.712T6 2t.713.288T7 3v2h4V3q0-.425.288-.712T12 2t.713.288T13 3v2h4V3q0-.425.288-.712T18 2t.713.288T19 3v2h2q.425 0 .713.288T22 6t-.288.713T21 7h-2v4h2q.425 0 .713.288T22 12t-.288.713T21 13h-2v4h2q.425 0 .713.288T22 18t-.288.713T21 19h-2v2q0 .425-.288.713T18 22t-.712-.288T17 21v-2h-4v2q0 .425-.288.713T12 22t-.712-.288T11 21v-2H7v2q0 .425-.288.713T6 22t-.712-.288T5 21zm2-2h4v-4H7zm6 0h4v-4h-4zm-6-6h4V7H7zm6 0h4V7h-4z"
+      ></path>
+    </symbol>
+
+    <symbol id="rulers" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/mdi?icon=mdi:ruler-square -->
+      <path
+        fill="currentColor"
+        d="M3 5v16h6v-1.5H7V18h2v-1.5H5V15h4v-1.5H7V12h2v-1.5H5V9h4V5h1.5v4H12V7h1.5v2H15V5h1.5v4H18V7h1.5v2H21V3H5a2 2 0 0 0-2 2m3 2a1 1 0 0 1-1-1a1 1 0 0 1 1-1a1 1 0 0 1 1 1a1 1 0 0 1-1 1"
+      ></path>
+    </symbol>
+
+    <symbol id="dot" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/mdi?icon=mdi:circle-medium -->
+      <path fill="currentColor" d="M12 8a4 4 0 0 0-4 4a4 4 0 0 0 4 4a4 4 0 0 0 4-4a4 4 0 0 0-4-4"></path>
+    </symbol>
+
+    <symbol id="eraser" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/mdi?icon=mdi:eraser -->
+      <path
+        fill="currentColor"
+        d="m16.24 3.56l4.95 4.94c.78.79.78 2.05 0 2.84L12 20.53a4.01 4.01 0 0 1-5.66 0L2.81 17c-.78-.79-.78-2.05 0-2.84l10.6-10.6c.79-.78 2.05-.78 2.83 0M4.22 15.58l3.54 3.53c.78.79 2.04.79 2.83 0l3.53-3.53l-4.95-4.95z"
+      ></path>
+    </symbol>
+
+    <symbol id="split-view" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:vertical-split-rounded -->
+      <path
+        fill="currentColor"
+        d="M4 15q-.425 0-.712-.288T3 14t.288-.712T4 13h6q.425 0 .713.288T11 14t-.288.713T10 15zm0 4q-.425 0-.712-.288T3 18t.288-.712T4 17h6q.425 0 .713.288T11 18t-.288.713T10 19zm0-8q-.425 0-.712-.288T3 10t.288-.712T4 9h6q.425 0 .713.288T11 10t-.288.713T10 11zm0-4q-.425 0-.712-.288T3 6t.288-.712T4 5h6q.425 0 .713.288T11 6t-.288.713T10 7zm11 12q-.825 0-1.412-.587T13 17V7q0-.825.588-1.412T15 5h4q.825 0 1.413.588T21 7v10q0 .825-.587 1.413T19 19z"
+      ></path>
+    </symbol>
+
+    <symbol id="save" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:save-rounded -->
+      <path
+        fill="currentColor"
+        d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h11.175q.4 0 .763.15t.637.425l2.85 2.85q.275.275.425.638t.15.762V19q0 .825-.587 1.413T19 21zm9.125-3.875Q15 16.25 15 15t-.875-2.125T12 12t-2.125.875T9 15t.875 2.125T12 18t2.125-.875M7 10h7q.425 0 .713-.288T15 9V7q0-.425-.288-.712T14 6H7q-.425 0-.712.288T6 7v2q0 .425.288.713T7 10"
+      ></path>
+    </symbol>
+  </defs>
+
+  <!-- UI Kit (utility) -->
+  <defs>
+    <symbol id="rocket" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:rocket-launch-rounded -->
+      <path fill="currentColor" d="M6.125 12.15q.65-1.65 1.563-3.175T9.75 6.1l-1.3-.275q-.5-.1-.975.05t-.825.5L3.5 9.525q-.375.375-.288.9t.588.725zm14.7-9.75q-2.65-.125-5.037 1.025T11.525 6.45q-1.2 1.2-2.113 2.6T7.826 12q-.125.325-.125.663t.25.587l3.125 3.125q.25.25.588.25t.662-.125q1.55-.675 2.95-1.588t2.6-2.112q1.875-1.875 3.025-4.262T21.925 3.5q0-.2-.1-.4t-.25-.35t-.35-.25t-.4-.1M13.9 8.438q0-.838.575-1.413t1.413-.575t1.412.575t.575 1.413T17.3 9.85t-1.412.575t-1.413-.575t-.575-1.412M12.175 18.2l1 2.325q.2.5.725.6t.9-.275l3.15-3.15q.35-.35.5-.837t.05-.988l-.25-1.3q-1.375 1.15-2.887 2.063T12.175 18.2M4.05 16.05q.875-.875 2.125-.888t2.125.863t.875 2.125t-.875 2.125q-1.2 1.2-2.838 1.425t-3.287.45q.225-1.65.463-3.287T4.05 16.05"></path>
+    </symbol>
+
+    <symbol id="content-cut" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:content-cut-rounded -->
+      <path fill="currentColor" d="m12 14l-2.35 2.35q.2.375.275.8T10 18q0 1.65-1.175 2.825T6 22t-2.825-1.175T2 18t1.175-2.825T6 14q.425 0 .85.075t.8.275L10 12L7.65 9.65q-.375.2-.8.275T6 10q-1.65 0-2.825-1.175T2 6t1.175-2.825T6 2t2.825 1.175T10 6q0 .425-.075.85t-.275.8L20.6 18.6q.675.675.3 1.538T19.575 21q-.275 0-.537-.112t-.463-.313zm3-3l-2-2l5.575-5.575q.2-.2.463-.312T19.574 3q.95 0 1.313.875t-.313 1.55zM7.413 7.413Q8 6.825 8 6t-.587-1.412T6 4t-1.412.588T4 6t.588 1.413T6 8t1.413-.587m4.937 4.937q.15-.15.15-.35t-.15-.35t-.35-.15t-.35.15t-.15.35t.15.35t.35.15t.35-.15m-4.937 7.063Q8 18.825 8 18t-.587-1.412T6 16t-1.412.588T4 18t.588 1.413T6 20t1.413-.587"></path>
+
+    </symbol>
+
+    <symbol id="content-copy" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:content-copy-rounded -->
+      <path fill="currentColor" d="M9 18q-.825 0-1.412-.587T7 16V4q0-.825.588-1.412T9 2h9q.825 0 1.413.588T20 4v12q0 .825-.587 1.413T18 18zm-4 4q-.825 0-1.412-.587T3 20V7q0-.425.288-.712T4 6t.713.288T5 7v13h10q.425 0 .713.288T16 21t-.288.713T15 22z"></path>
+    </symbol>
+
+    <symbol id="content-paste" viewBox="0 0 24 24">
+      <!-- https://icones.js.org/collection/material-symbols?icon=material-symbols:content-paste-rounded -->
+      <path fill="currentColor" d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h4.175q.275-.875 1.075-1.437T12 1q1 0 1.788.563T14.85 3H19q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm0-2h14V5h-2v2q0 .425-.288.713T16 8H8q-.425 0-.712-.288T7 7V5H5zm7.713-14.288Q13 4.425 13 4t-.288-.712T12 3t-.712.288T11 4t.288.713T12 5t.713-.288"></path>
+    </symbol>
+  </defs>
+
+  <!-- Stitches -->
+  <defs>
+    <symbol id="stitch-full" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M16 2h6v6l-4 4 4 4v6h-6l-4-4-4 4H2v-6l4-4-4-4V2h6l4 4 4-4Z" />
+    </symbol>
+
+    <symbol id="stitch-petite" viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        d="M2 13h3l1.5 1.5L8 13h3v3l-1.5 1.5L11 19v3H8l-1.5-1.5L5 22H2v-3l1.5-1.5L2 16v-3Zm11 0h3l1.5 1.5L19 13h3v3l-1.5 1.5L22 19v3h-3l-1.5-1.5L16 22h-3v-3l1.5-1.5L13 16v-3Zm0-11h3l1.5 1.5L19 2h3v3l-1.5 1.5L22 8v3h-3l-1.5-1.5L16 11h-3V8l1.5-1.5L13 5V2ZM2 2h3l1.5 1.5L8 2h3v3L9.5 6.5 11 8v3H8L6.5 9.5 5 11H2V8l1.5-1.5L2 5V2Z"
+      />
+    </symbol>
+
+    <symbol id="stitch-petite-tl" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M2 2h3l1.5 1.5L8 2h3v3L9.5 6.5 11 8v3H8L6.5 9.5 5 11H2V8l1.5-1.5L2 5V2Z" />
+    </symbol>
+
+    <symbol id="stitch-petite-tr" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M13 2h3l1.5 1.5L19 2h3v3l-1.5 1.5L22 8v3h-3l-1.5-1.5L16 11h-3V8l1.5-1.5L13 5V2Z" />
+    </symbol>
+
+    <symbol id="stitch-petite-br" viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        d="M13 13h3l1.5 1.5L19 13h3v3l-1.5 1.5L22 19v3h-3l-1.5-1.5L16 22h-3v-3l1.5-1.5L13 16v-3Z"
+      />
+    </symbol>
+
+    <symbol id="stitch-petite-bl" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M2 13h3l1.5 1.5L8 13h3v3l-1.5 1.5L11 19v3H8l-1.5-1.5L5 22H2v-3l1.5-1.5L2 16v-3Z" />
+    </symbol>
+
+    <symbol id="stitch-half" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M22 16v6h-6l-2.5-2.5 6-6L22 16ZM8 2l2.5 2.5-6 6L2 8V2h6ZM2 16 16 2h6v6L8 22H2v-6Z" />
+    </symbol>
+
+    <symbol id="stitch-half-forward" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M2 14 14 2h8v8L10 22H2v-8Z" />
+    </symbol>
+
+    <symbol id="stitch-half-backward" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M22 14 10 2H2v8l12 12h8v-8Z" />
+    </symbol>
+
+    <symbol id="stitch-quarter" viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        d="m2 18 5-5h4v4l-5 5H2v-4Zm16 4-5-5v-4h4l5 5v4h-4ZM13 7l5-5h4v4l-5 5h-4V7Zm-6 4L2 6V2h4l5 5.2V11H7Z"
+      />
+    </symbol>
+
+    <symbol id="stitch-quarter-tl" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M7 11 2 6V2h4l5 5.2V11H7Z" />
+    </symbol>
+
+    <symbol id="stitch-quarter-tr" viewBox="0 0 24 24">
+      <path fill="currentColor" d="m13 7 5-5h4v4l-5 5h-4V7Z" />
+    </symbol>
+
+    <symbol id="stitch-quarter-br" viewBox="0 0 24 24">
+      <path fill="currentColor" d="m18 22-5-5v-4h4l5 5v4h-4Z" />
+    </symbol>
+
+    <symbol id="stitch-quarter-bl" viewBox="0 0 24 24">
+      <path fill="currentColor" d="m2 18 5-5h4v4l-5 5H2v-4Z" />
+    </symbol>
+
+    <symbol id="stitch-back" viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M6 4a2 2 0 1 0-4 0v16a1.994 1.994 0 0 0 .728 1.543c.343.284.783.455 1.263.457H20a2 2 0 1 0 0-4H8.828L21.414 5.414a2 2 0 1 0-2.828-2.828L6 15.172V4Z"
+      />
+    </symbol>
+
+    <symbol id="stitch-straight" viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        d="M1.073 2.465a2 2 0 0 1 2.462-1.392l18 5h.004c.127.037.25.085.368.144l.006.003c.09.046.173.1.254.159.076.055.15.114.218.18.01.008.019.018.028.028a1.985 1.985 0 0 1 .572 1.17c.004.03.005.059.007.087.003.035.006.07.007.106 0 .041 0 .082-.002.123-.001.024-.001.049-.003.073a1.97 1.97 0 0 1-.057.343c-.004.015-.005.032-.01.047l-.003.009a2.004 2.004 0 0 1-.141.362 1.977 1.977 0 0 1-.18.285l-.03.042-.053.062c-.026.03-.05.06-.078.09-.015.016-.032.03-.049.046a2.018 2.018 0 0 1-.089.082c-.017.016-.036.03-.054.044-.083.066-.17.128-.263.18a2.01 2.01 0 0 1-.564.216L12.22 12l9.214 2.047.005.002c.045.01.088.023.132.036.13.038.253.089.368.15l.048.024c.158.09.3.202.426.328.008.008.018.015.026.024l.013.013c.023.024.044.05.065.076.019.021.038.042.055.064l.033.045a2.005 2.005 0 0 1 .32.649l.002.006c.004.013.005.025.008.038.03.114.05.231.059.351l.003.072c.001.042.003.083.002.124-.001.035-.005.069-.007.103-.002.03-.003.06-.007.09a2.042 2.042 0 0 1-.024.14c-.004.017-.004.035-.008.052l-.002.005c-.01.045-.023.088-.036.132a1.983 1.983 0 0 1-.479.816l-.056.059a2.012 2.012 0 0 1-.213.175 1.968 1.968 0 0 1-.628.304l-.004.002-18 5a2 2 0 0 1-1.07-3.854l10.285-2.858-10.184-2.262c-.019-.004-.037-.011-.056-.016a2.057 2.057 0 0 1-.455-.176 2.049 2.049 0 0 1-.32-.215c-.027-.022-.054-.044-.079-.067-.024-.021-.046-.044-.068-.066l-.065-.067a1.948 1.948 0 0 1-.231-.31 1.975 1.975 0 0 1-.23-.553l-.014-.049c-.003-.01-.003-.02-.005-.03a1.273 1.273 0 0 1-.02-.126c-.004-.025-.008-.05-.01-.074a1.972 1.972 0 0 1 0-.408.963.963 0 0 1 .01-.075c.005-.042.011-.085.02-.127l.005-.028c.003-.017.01-.033.013-.05a1.994 1.994 0 0 1 .28-.63 1.946 1.946 0 0 1 .114-.153c.022-.026.043-.053.066-.078.022-.024.044-.046.067-.068.022-.023.044-.046.068-.067a1.961 1.961 0 0 1 .143-.117c.034-.026.068-.05.104-.074l.045-.029a1.954 1.954 0 0 1 .57-.24l.048-.013L12.75 7.784 2.465 4.927a2 2 0 0 1-1.392-2.462Z"
+      />
+    </symbol>
+
+    <symbol id="stitch-french-knot" viewBox="0 0 24 24">
+      <circle fill="currentColor" cx="12" cy="12" r="8" />
+    </symbol>
+
+    <symbol id="stitch-bead" viewBox="0 0 24 24">
+      <rect fill="currentColor" width="12" height="20" x="6" y="2" rx="4" />
+    </symbol>
+
+    <symbol id="stitch-mix" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M13 13h9v9h-9zM2 2h9v9H2zm0 16 5-5h4v4l-5 5H2v-4ZM13 7l5-5h4v4l-5.2 5H13V7Z" />
+    </symbol>
+
+    <symbol id="stitch-square" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M2 2h20v20H2z" />
+    </symbol>
+  </defs>
+
+  <!-- Window controls -->
+  <defs>
+    <symbol id="window-minimize" viewBox="0 0 10 1">
+      <path
+        fill="currentColor"
+        d="M0.498047 1.00098C0.429688 1.00098 0.364583 0.987956 0.302734 0.961914C0.244141 0.935872 0.192057 0.900065 0.146484 0.854492C0.100911 0.808919 0.0651042 0.756836 0.0390625 0.698242C0.0130208 0.636393 0 0.571289 0 0.50293C0 0.43457 0.0130208 0.371094 0.0390625 0.3125C0.0651042 0.250651 0.100911 0.19694 0.146484 0.151367C0.192057 0.102539 0.244141 0.0651042 0.302734 0.0390625C0.364583 0.0130208 0.429688 0 0.498047 0H9.50195C9.57031 0 9.63379 0.0130208 9.69238 0.0390625C9.75423 0.0651042 9.80794 0.102539 9.85352 0.151367C9.89909 0.19694 9.9349 0.250651 9.96094 0.3125C9.98698 0.371094 10 0.43457 10 0.50293C10 0.571289 9.98698 0.636393 9.96094 0.698242C9.9349 0.756836 9.89909 0.808919 9.85352 0.854492C9.80794 0.900065 9.75423 0.935872 9.69238 0.961914C9.63379 0.987956 9.57031 1.00098 9.50195 1.00098H0.498047Z"
+      />
+    </symbol>
+
+    <symbol id="window-maximize" viewBox="0 0 10 11">
+      <path
+        fill="currentColor"
+        d="M1.47461 10.001C1.2793 10.001 1.09212 9.96191 0.913086 9.88379C0.734049 9.80241 0.576172 9.69499 0.439453 9.56152C0.30599 9.4248 0.198568 9.26693 0.117188 9.08789C0.0390625 8.90885 0 8.72168 0 8.52637V1.47559C0 1.28027 0.0390625 1.0931 0.117188 0.914062C0.198568 0.735026 0.30599 0.578776 0.439453 0.445312C0.576172 0.308594 0.734049 0.201172 0.913086 0.123047C1.09212 0.0416667 1.2793 0.000976562 1.47461 0.000976562H8.52539C8.7207 0.000976562 8.90788 0.0416667 9.08691 0.123047C9.26595 0.201172 9.4222 0.308594 9.55566 0.445312C9.69238 0.578776 9.7998 0.735026 9.87793 0.914062C9.95931 1.0931 10 1.28027 10 1.47559V8.52637C10 8.72168 9.95931 8.90885 9.87793 9.08789C9.7998 9.26693 9.69238 9.4248 9.55566 9.56152C9.4222 9.69499 9.26595 9.80241 9.08691 9.88379C8.90788 9.96191 8.7207 10.001 8.52539 10.001H1.47461ZM8.50098 9C8.56934 9 8.63281 8.98698 8.69141 8.96094C8.75326 8.9349 8.80697 8.89909 8.85254 8.85352C8.89811 8.80794 8.93392 8.75586 8.95996 8.69727C8.986 8.63542 8.99902 8.57031 8.99902 8.50195V1.5C8.99902 1.43164 8.986 1.36816 8.95996 1.30957C8.93392 1.24772 8.89811 1.19401 8.85254 1.14844C8.80697 1.10286 8.75326 1.06706 8.69141 1.04102C8.63281 1.01497 8.56934 1.00195 8.50098 1.00195H1.49902C1.43066 1.00195 1.36556 1.01497 1.30371 1.04102C1.24512 1.06706 1.19303 1.10286 1.14746 1.14844C1.10189 1.19401 1.06608 1.24772 1.04004 1.30957C1.014 1.36816 1.00098 1.43164 1.00098 1.5V8.50195C1.00098 8.57031 1.014 8.63542 1.04004 8.69727C1.06608 8.75586 1.10189 8.80794 1.14746 8.85352C1.19303 8.89909 1.24512 8.9349 1.30371 8.96094C1.36556 8.98698 1.43066 9 1.49902 9H8.50098Z"
+      />
+    </symbol>
+
+    <symbol id="window-restore" viewBox="0 0 10 11">
+      <path
+        fill="currentColor"
+        d="M8.99902 2.98096C8.99902 2.71077 8.94531 2.45687 8.83789 2.21924C8.73047 1.97835 8.58398 1.77002 8.39844 1.59424C8.21615 1.4152 8.00293 1.27523 7.75879 1.17432C7.5179 1.07015 7.264 1.01807 6.99707 1.01807H2.08496C2.13704 0.868327 2.21029 0.731608 2.30469 0.60791C2.39909 0.484212 2.50814 0.378418 2.63184 0.290527C2.75553 0.202637 2.89062 0.135905 3.03711 0.090332C3.18685 0.0415039 3.34147 0.0170898 3.50098 0.0170898H6.99707C7.41048 0.0170898 7.79948 0.0968424 8.16406 0.256348C8.52865 0.412598 8.84603 0.625814 9.11621 0.895996C9.38965 1.16618 9.60449 1.48356 9.76074 1.84814C9.92025 2.21273 10 2.60173 10 3.01514V6.51611C10 6.67562 9.97559 6.83024 9.92676 6.97998C9.88118 7.12646 9.81445 7.26156 9.72656 7.38525C9.63867 7.50895 9.53288 7.618 9.40918 7.7124C9.28548 7.8068 9.14876 7.88005 8.99902 7.93213V2.98096ZM1.47461 10.0171C1.2793 10.0171 1.09212 9.97803 0.913086 9.8999C0.734049 9.81852 0.576172 9.7111 0.439453 9.57764C0.30599 9.44092 0.198568 9.28304 0.117188 9.104C0.0390625 8.92497 0 8.73779 0 8.54248V3.49365C0 3.29508 0.0390625 3.10791 0.117188 2.93213C0.198568 2.75309 0.30599 2.59684 0.439453 2.46338C0.576172 2.32666 0.732422 2.21924 0.908203 2.14111C1.08724 2.05973 1.27604 2.01904 1.47461 2.01904H6.52344C6.72201 2.01904 6.91081 2.05973 7.08984 2.14111C7.26888 2.21924 7.42513 2.32503 7.55859 2.4585C7.69206 2.59196 7.79785 2.74821 7.87598 2.92725C7.95736 3.10628 7.99805 3.29508 7.99805 3.49365V8.54248C7.99805 8.74105 7.95736 8.92985 7.87598 9.10889C7.79785 9.28467 7.69043 9.44092 7.55371 9.57764C7.42025 9.7111 7.264 9.81852 7.08496 9.8999C6.90918 9.97803 6.72201 10.0171 6.52344 10.0171H1.47461ZM6.49902 9.01611C6.56738 9.01611 6.63086 9.00309 6.68945 8.97705C6.7513 8.95101 6.80501 8.9152 6.85059 8.86963C6.89941 8.82406 6.93685 8.77197 6.96289 8.71338C6.98893 8.65153 7.00195 8.58643 7.00195 8.51807V3.51807C7.00195 3.44971 6.98893 3.3846 6.96289 3.32275C6.93685 3.2609 6.90104 3.20719 6.85547 3.16162C6.8099 3.11605 6.75618 3.08024 6.69434 3.0542C6.63249 3.02816 6.56738 3.01514 6.49902 3.01514H1.49902C1.43066 3.01514 1.36556 3.02816 1.30371 3.0542C1.24512 3.08024 1.19303 3.11768 1.14746 3.1665C1.10189 3.21208 1.06608 3.26579 1.04004 3.32764C1.014 3.38623 1.00098 3.44971 1.00098 3.51807V8.51807C1.00098 8.58643 1.014 8.65153 1.04004 8.71338C1.06608 8.77197 1.10189 8.82406 1.14746 8.86963C1.19303 8.9152 1.24512 8.95101 1.30371 8.97705C1.36556 9.00309 1.43066 9.01611 1.49902 9.01611H6.49902Z"
+      />
+    </symbol>
+
+    <symbol id="window-close" viewBox="0 0 10 11">
+      <path
+        fill="currentColor"
+        d="M5 5.70898L0.854492 9.85449C0.756836 9.95215 0.639648 10.001 0.50293 10.001C0.359701 10.001 0.239258 9.95378 0.141602 9.85938C0.0472005 9.76172 0 9.64128 0 9.49805C0 9.36133 0.0488281 9.24414 0.146484 9.14648L4.29199 5.00098L0.146484 0.855469C0.0488281 0.757812 0 0.638997 0 0.499023C0 0.430664 0.0130208 0.36556 0.0390625 0.303711C0.0651042 0.241862 0.100911 0.189779 0.146484 0.147461C0.192057 0.101888 0.245768 0.0660807 0.307617 0.0400391C0.369466 0.0139974 0.43457 0.000976562 0.50293 0.000976562C0.639648 0.000976562 0.756836 0.0498047 0.854492 0.147461L5 4.29297L9.14551 0.147461C9.24316 0.0498047 9.36198 0.000976562 9.50195 0.000976562C9.57031 0.000976562 9.63379 0.0139974 9.69238 0.0400391C9.75423 0.0660807 9.80794 0.101888 9.85352 0.147461C9.89909 0.193034 9.9349 0.246745 9.96094 0.308594C9.98698 0.367188 10 0.430664 10 0.499023C10 0.638997 9.95117 0.757812 9.85352 0.855469L5.70801 5.00098L9.85352 9.14648C9.95117 9.24414 10 9.36133 10 9.49805C10 9.56641 9.98698 9.63151 9.96094 9.69336C9.9349 9.75521 9.89909 9.80892 9.85352 9.85449C9.8112 9.90007 9.75911 9.93587 9.69727 9.96191C9.63542 9.98796 9.57031 10.001 9.50195 10.001C9.36198 10.001 9.24316 9.95215 9.14551 9.85449L5 5.70898Z"
+      />
+    </symbol>
+  </defs>
+
+
+</svg>
