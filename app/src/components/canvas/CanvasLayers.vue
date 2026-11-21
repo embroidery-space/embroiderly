@@ -1,25 +1,10 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, ContextMenu, Editable, Tree } from "@embroiderly/ui";
+import { Button, ButtonIcon, ContextMenu, Editable, Icon, Tree } from "@embroiderly/ui";
 import type { ContextMenuItem, TreeItem } from "@embroiderly/ui";
 
 import { insertNodeAt, removeNode, useSortable } from "@vueuse/integrations/useSortable";
 import { computed, nextTick, watchEffect, useTemplateRef } from "vue";
 
-import {
-  IconLayers,
-  IconPlus,
-  IconTrash,
-  IconVisibility,
-  IconVisibilityOff,
-  IconStitchFull,
-  IconStitchPetite,
-  IconStitchHalf,
-  IconStitchQuarter,
-  IconStitchBack,
-  IconStitchStraight,
-  IconStitchFrenchKnot,
-  IconStitchBead,
-} from "~/assets/icons/";
 import { useI18n } from "~/composables/";
 import type { LayerVisibility } from "~/lib/pattern/";
 import type { Layer } from "~/lib/pattern/";
@@ -70,7 +55,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
           index: layer.index,
           label: fluent.$t("canvas-layers-full-stitches"),
           value: `layer-${layer.index}-fullstitches`,
-          icon: IconStitchFull,
+          icon: "stitch-full",
           visible: visibility.fullstitchesVisible,
           toggledVisibility: { ...visibility, fullstitchesVisible: !visibility.fullstitchesVisible },
           disabled: !visibility.visible,
@@ -79,7 +64,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
           index: layer.index,
           label: fluent.$t("canvas-layers-petite-stitches"),
           value: `layer-${layer.index}-petitestitches`,
-          icon: IconStitchPetite,
+          icon: "stitch-petite",
           visible: visibility.petitestitchesVisible,
           toggledVisibility: { ...visibility, petitestitchesVisible: !visibility.petitestitchesVisible },
           disabled: !visibility.visible,
@@ -88,7 +73,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
           index: layer.index,
           label: fluent.$t("canvas-layers-half-stitches"),
           value: `layer-${layer.index}-halfstitches`,
-          icon: IconStitchHalf,
+          icon: "stitch-half",
           visible: visibility.halfstitchesVisible,
           toggledVisibility: { ...visibility, halfstitchesVisible: !visibility.halfstitchesVisible },
           disabled: !visibility.visible,
@@ -97,7 +82,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
           index: layer.index,
           label: fluent.$t("canvas-layers-quarter-stitches"),
           value: `layer-${layer.index}-quarterstitches`,
-          icon: IconStitchQuarter,
+          icon: "stitch-quarter",
           visible: visibility.quarterstitchesVisible,
           toggledVisibility: { ...visibility, quarterstitchesVisible: !visibility.quarterstitchesVisible },
           disabled: !visibility.visible,
@@ -106,7 +91,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
           index: layer.index,
           label: fluent.$t("canvas-layers-back-stitches"),
           value: `layer-${layer.index}-backstitches`,
-          icon: IconStitchBack,
+          icon: "stitch-back",
           visible: visibility.backstitchesVisible,
           toggledVisibility: { ...visibility, backstitchesVisible: !visibility.backstitchesVisible },
           disabled: !visibility.visible,
@@ -115,7 +100,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
           index: layer.index,
           label: fluent.$t("canvas-layers-straight-stitches"),
           value: `layer-${layer.index}-straightstitches`,
-          icon: IconStitchStraight,
+          icon: "stitch-straight",
           visible: visibility.straightstitchesVisible,
           toggledVisibility: { ...visibility, straightstitchesVisible: !visibility.straightstitchesVisible },
           disabled: !visibility.visible,
@@ -124,7 +109,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
           index: layer.index,
           label: fluent.$t("canvas-layers-french-knots"),
           value: `layer-${layer.index}-frenchknots`,
-          icon: IconStitchFrenchKnot,
+          icon: "stitch-french-knot",
           visible: visibility.frenchknotsVisible,
           toggledVisibility: { ...visibility, frenchknotsVisible: !visibility.frenchknotsVisible },
           disabled: !visibility.visible,
@@ -133,7 +118,7 @@ const layerItems = computed<LayerTreeItem[]>(() =>
           index: layer.index,
           label: fluent.$t("canvas-layers-beads"),
           value: `layer-${layer.index}-beads`,
-          icon: IconStitchBead,
+          icon: "stitch-bead",
           visible: visibility.beadsVisible,
           toggledVisibility: { ...visibility, beadsVisible: !visibility.beadsVisible },
           disabled: !visibility.visible,
@@ -150,12 +135,12 @@ const selectedLayerDisplayName = computed(
 const contextMenuItems = computed<ContextMenuItem[]>(() => [
   {
     label: fluent.$t("canvas-layers-add"),
-    icon: IconPlus,
+    icon: "plus",
     onSelect: () => emits("addLayer"),
   },
   {
     label: fluent.$t("canvas-layers-remove", { name: selectedLayerDisplayName.value }),
-    icon: IconTrash,
+    icon: "trash",
     disabled: props.layers.length <= 1,
     onSelect: () => emits("removeLayer", modelValue.value),
   },
@@ -188,23 +173,23 @@ watchEffect(() => {
 <template>
   <div ref="tree-container" :class="$style.root">
     <div :class="$style.header">
-      <IconLayers :class="[$style.icon, { [$style.disabled]: disabled }]" />
+      <Icon name="layers" :class="[$style.icon, { [$style.disabled]: disabled }]" />
       <span :class="[$style.title, { [$style.disabled]: disabled }]">
         {{ $t("canvas-layers") }}
       </span>
 
       <ButtonIcon
+        icon="plus"
         color="neutral"
         variant="ghost"
-        :icon="IconPlus"
         :disabled="disabled"
         :tooltip="$t('canvas-layers-add')"
         @click="$emit('addLayer')"
       />
       <ButtonIcon
+        icon="trash"
         color="neutral"
         variant="ghost"
-        :icon="IconTrash"
         :disabled="disabled || layers.length <= 1"
         :tooltip="$t('canvas-layers-remove', { name: selectedLayerDisplayName })"
         @click="emits('removeLayer', modelValue)"
@@ -238,7 +223,7 @@ watchEffect(() => {
             color="neutral"
             variant="ghost"
             size="sm"
-            :icon="item.visible ? IconVisibility : IconVisibilityOff"
+            :icon="item.visible ? 'visibility' : 'visibility-off'"
             :disabled="itemDisabled"
             @click.stop="emits('toggleLayerVisibility', item.index, item.toggledVisibility)"
           />

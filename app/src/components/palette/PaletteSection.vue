@@ -3,8 +3,6 @@ import { Button } from "@embroiderly/ui";
 
 import { useId } from "vue";
 
-import { IconClose } from "~/assets/icons/";
-
 const props = defineProps<{ title: string }>();
 const emit = defineEmits<{ close: [] }>();
 
@@ -19,7 +17,7 @@ const sectionId = useId();
         square
         variant="ghost"
         color="neutral"
-        :icon="IconClose"
+        icon="close"
         :aria-label="$t('modal-close')"
         @click="emit('close')"
       />

@@ -1,5 +1,15 @@
 <script setup lang="ts">
-import { Button, ButtonIcon, DropdownMenu, Menubar, Separator, Tabs, useConfirm, useShortcuts } from "@embroiderly/ui";
+import {
+  Button,
+  ButtonIcon,
+  DropdownMenu,
+  Icon,
+  Menubar,
+  Separator,
+  Tabs,
+  useConfirm,
+  useShortcuts,
+} from "@embroiderly/ui";
 import type { DropdownMenuItem, MenubarMenu } from "@embroiderly/ui";
 import { resolveResource } from "@tauri-apps/api/path";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
@@ -8,16 +18,6 @@ import { openPath } from "@tauri-apps/plugin-opener";
 import { useMediaQuery } from "@vueuse/core";
 import { computed, ref } from "vue";
 
-import {
-  IconClose,
-  IconDot,
-  IconFullscreen,
-  IconFullscreenExit,
-  IconMenu,
-  IconRedo,
-  IconSettings,
-  IconUndo,
-} from "~/assets/icons/";
 import { useEditor, useEditorModals, useFilePicker, useI18n } from "~/composables/";
 import { useTour } from "~/composables/core/";
 import { Fabric, deserializeFabricColors } from "~/lib/pattern/";
@@ -354,7 +354,7 @@ useShortcuts({
       <div :class="$style.menu">
         <Menubar v-if="isLargeScreen" :menus="appMenu.desktopMenubarMenus" />
         <DropdownMenu v-else :items="appMenu.mobileDropdownMenuItems">
-          <ButtonIcon :icon="IconMenu" variant="ghost" color="neutral" :tooltip="$t('app-menu-open')" />
+          <ButtonIcon icon="menu" variant="ghost" color="neutral" :tooltip="$t('app-menu-open')" />
         </DropdownMenu>
       </div>
 
@@ -368,14 +368,14 @@ useShortcuts({
         @update:model-value="patternFileStore.switchPattern($event as string)"
       >
         <template #leading="{ item }">
-          <IconDot aria-hidden="true" :class="[$style.dirty, { [$style.invisible]: !item.dirty }]" />
+          <Icon name="dot" aria-hidden="true" :class="[$style.dirty, { [$style.invisible]: !item.dirty }]" />
         </template>
 
         <template #trailing="{ item }">
           <Button
+            icon="close"
             size="sm"
             variant="ghost"
-            :icon="IconClose"
             :class="[$style.close, patternStore.pattern.id === item.value ? $style.active : $style.inactive]"
             @click.stop="patternFileStore.closePattern(item.value as string)"
           />
@@ -386,7 +386,7 @@ useShortcuts({
         <template v-if="!patternStore.pattern.isNil">
           <ButtonIcon
             data-testid="undo-button"
-            :icon="IconUndo"
+            icon="undo"
             color="neutral"
             variant="ghost"
             shortcut="Control+Z"
@@ -395,7 +395,7 @@ useShortcuts({
           />
           <ButtonIcon
             data-testid="redo-button"
-            :icon="IconRedo"
+            icon="redo"
             color="neutral"
             variant="ghost"
             shortcut="Control+Y"
@@ -408,9 +408,9 @@ useShortcuts({
         <DropdownMenu :items="manageOptions" :modal="false">
           <ButtonIcon
             :loading="settingsStore.loadingUpdate"
+            icon="settings"
             variant="ghost"
             color="neutral"
-            :icon="IconSettings"
             :tooltip="$t('app-menu-manage')"
           />
         </DropdownMenu>
@@ -420,7 +420,7 @@ useShortcuts({
           variant="ghost"
           color="neutral"
           shortcut="F11"
-          :icon="isFullscreen ? IconFullscreenExit : IconFullscreen"
+          :icon="isFullscreen ? 'dullscreen-exit' : 'fullscreen'"
           :tooltip="isFullscreen ? $t('app-fullscreen-exit') : $t('app-fullscreen-enter')"
           @click="toggleFullscreen"
         />

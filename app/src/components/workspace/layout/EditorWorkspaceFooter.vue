@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { ButtonIcon } from "@embroiderly/ui";
 
-import { IconPanelLeftClose, IconPanelLeftOpen, IconPanelRightClose, IconPanelRightOpen } from "~/assets/icons/";
 import { CanvasZoomControls } from "~/components/canvas/";
 import { PaletteMode, useEditorStateStore } from "~/stores/";
 
@@ -18,7 +17,7 @@ const editorStateStore = useEditorStateStore();
       color="neutral"
       variant="ghost"
       shortcut="Ctrl+Shift+L"
-      :icon="editorStateStore.palettePanelCollapsed ? IconPanelLeftOpen : IconPanelLeftClose"
+      :icon="editorStateStore.palettePanelCollapsed ? 'panel-left-open' : 'panel-left-close'"
       :tooltip="editorStateStore.palettePanelCollapsed ? $t('palette-panel-expand') : $t('palette-panel-collapse')"
       :disabled="disabled || editorStateStore.paletteMode === PaletteMode.Editing"
       @click="
@@ -40,7 +39,7 @@ const editorStateStore = useEditorStateStore();
       color="neutral"
       variant="ghost"
       shortcut="Ctrl+Shift+R"
-      :icon="editorStateStore.canvasPanelCollapsed ? IconPanelRightOpen : IconPanelRightClose"
+      :icon="editorStateStore.canvasPanelCollapsed ? 'panel-right-open' : 'panel-right-close'"
       :tooltip="editorStateStore.canvasPanelCollapsed ? $t('canvas-panel-expand') : $t('canvas-panel-collapse')"
       :disabled="disabled"
       @click="

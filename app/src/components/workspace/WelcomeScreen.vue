@@ -5,7 +5,6 @@ import { openPath } from "@tauri-apps/plugin-opener";
 
 import { computed } from "vue";
 
-import { IconExternalLink, IconFileCreate, IconFileOpen } from "~/assets/icons/";
 import { useEditorModals, useI18n } from "~/composables/";
 import { Fabric } from "~/lib/pattern/";
 import { useSettingsStore } from "~/settings/";
@@ -111,14 +110,14 @@ function createPattern() {
             <div :class="$style.actions">
               <Button
                 variant="ghost"
-                :icon="IconFileCreate"
+                icon="file-create"
                 :label="$t('welcome-create-pattern')"
                 :class="$style.action"
                 @click="createPattern"
               />
               <Button
                 variant="ghost"
-                :icon="IconFileOpen"
+                icon="file-open"
                 :label="$t('welcome-open-pattern')"
                 :class="$style.action"
                 @click="openPattern"
@@ -139,7 +138,7 @@ function createPattern() {
                 >
                   <span :class="$style.itemTitle">
                     {{ item.title }}
-                    <Icon :name="IconExternalLink" />
+                    <Icon name="link-external" />
                   </span>
                   <span v-if="item.text">{{ item.text }}</span>
                 </a>

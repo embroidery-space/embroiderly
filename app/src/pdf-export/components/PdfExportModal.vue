@@ -19,16 +19,6 @@ import { refAutoReset, useDebounceFn, useThrottleFn } from "@vueuse/core";
 import { isEqual } from "es-toolkit";
 import { ref, computed, onMounted, onUnmounted, toRaw, watch, useTemplateRef } from "vue";
 
-import {
-  IconCheck,
-  IconCode,
-  IconDownload,
-  IconFileStorage,
-  IconSave,
-  IconSettings,
-  IconSplitView,
-  IconVisibility,
-} from "~/assets/icons/";
 import { useEditor, useFilePicker, useI18n } from "~/composables/";
 import { PatternPdf, PdfAsset } from "~/lib/pattern/";
 import { LoggerService, MetricsService } from "~/services/";
@@ -271,7 +261,7 @@ onUnmounted(() => service.destroy());
       <div :class="$style.aside">
         <ToolToggle
           :model-value="typstEditorStateStore.activeAsideBlock === TypstEditorAsideBlock.Assets"
-          :icon="IconFileStorage"
+          icon="file-storage"
           :tooltip="$t('pdf-export-assets')"
           :tooltip-options="{ side: 'right' }"
           @update:model-value="typstEditorStateStore.toggleAsideBlock(TypstEditorAsideBlock.Assets)"
@@ -284,17 +274,17 @@ onUnmounted(() => service.destroy());
           orientation="vertical"
           :items="[
             {
-              icon: IconCode,
+              icon: 'code',
               value: TypstEditorViewMode.Code,
               tooltip: $t('pdf-export-view-mode-code'),
             },
             {
-              icon: IconSplitView,
+              icon: 'split-view',
               value: TypstEditorViewMode.SplitView,
               tooltip: $t('pdf-export-view-mode-split-view'),
             },
             {
-              icon: IconVisibility,
+              icon: 'visibility',
               value: TypstEditorViewMode.Preview,
               tooltip: $t('pdf-export-view-mode-preview'),
             },
@@ -304,7 +294,7 @@ onUnmounted(() => service.destroy());
 
         <ToolToggle
           :model-value="typstEditorStateStore.activeAsideBlock === TypstEditorAsideBlock.Settings"
-          :icon="IconSettings"
+          icon="settings"
           :tooltip="$t('pdf-export-settings')"
           :tooltip-options="{ side: 'right' }"
           style="margin-top: auto"
@@ -333,7 +323,7 @@ onUnmounted(() => service.destroy());
         <Button
           :loading="saveInProgress"
           variant="outline"
-          :icon="templateSaved ? IconCheck : IconSave"
+          :icon="templateSaved ? 'check' : 'save'"
           :label="$t('pdf-export-save-template')"
           style="margin-left: auto"
           @click="saveTemplate"
@@ -341,7 +331,7 @@ onUnmounted(() => service.destroy());
 
         <Button
           :loading="exportInProgress"
-          :icon="documentExported ? IconCheck : IconDownload"
+          :icon="documentExported ? 'check' : 'download'"
           :label="$t('pdf-export-export-document')"
           @click="exportDocument"
         />

@@ -2,28 +2,6 @@ import type { ToolSelectItem } from "@embroiderly/ui";
 
 import { computed } from "vue";
 
-import {
-  IconCursor,
-  IconEraser,
-  IconStitchBack,
-  IconStitchBead,
-  IconStitchFrenchKnot,
-  IconStitchFull,
-  IconStitchHalf,
-  IconStitchHalfBackward,
-  IconStitchHalfForward,
-  IconStitchPetite,
-  IconStitchPetiteBL,
-  IconStitchPetiteBR,
-  IconStitchPetiteTL,
-  IconStitchPetiteTR,
-  IconStitchQuarter,
-  IconStitchQuarterBL,
-  IconStitchQuarterBR,
-  IconStitchQuarterTL,
-  IconStitchQuarterTR,
-  IconStitchStraight,
-} from "~/assets/icons/";
 import { tools } from "~/lib/tools/";
 
 import { useI18n } from "./useI18n.ts";
@@ -36,7 +14,7 @@ export function useToolItems() {
     {
       value: tools.FullStitch,
       label: fluent.$t("stitch-full"),
-      icon: IconStitchFull,
+      icon: "stitch-full",
       shortcut: "F",
     },
   ]);
@@ -45,31 +23,31 @@ export function useToolItems() {
     {
       value: tools.PetiteStitch,
       label: fluent.$t("stitch-petite"),
-      icon: IconStitchPetite,
+      icon: "stitch-petite",
       shortcut: "P",
     },
     {
       value: tools.PetiteStitchTL,
       label: fluent.$t("stitch-petite-tl"),
-      icon: IconStitchPetiteTL,
+      icon: "stitch-petite-tl",
       shortcut: "P-T-L",
     },
     {
       value: tools.PetiteStitchTR,
       label: fluent.$t("stitch-petite-tr"),
-      icon: IconStitchPetiteTR,
+      icon: "stitch-petite-tr",
       shortcut: "P-T-R",
     },
     {
       value: tools.PetiteStitchBR,
       label: fluent.$t("stitch-petite-br"),
-      icon: IconStitchPetiteBR,
+      icon: "stitch-petite-br",
       shortcut: "P-B-R",
     },
     {
       value: tools.PetiteStitchBL,
       label: fluent.$t("stitch-petite-bl"),
-      icon: IconStitchPetiteBL,
+      icon: "stitch-petite-bl",
       shortcut: "P-B-L",
     },
   ]);
@@ -78,19 +56,19 @@ export function useToolItems() {
     {
       value: tools.HalfStitch,
       label: fluent.$t("stitch-half"),
-      icon: IconStitchHalf,
+      icon: "stitch-half",
       shortcut: "H",
     },
     {
       value: tools.HalfStitchForward,
       label: fluent.$t("stitch-half-forward"),
-      icon: IconStitchHalfForward,
+      icon: "stitch-half-forward",
       shortcut: "H-F",
     },
     {
       value: tools.HalfStitchBackward,
       label: fluent.$t("stitch-half-backward"),
-      icon: IconStitchHalfBackward,
+      icon: "stitch-half-backward",
       shortcut: "H-B",
     },
   ]);
@@ -99,31 +77,31 @@ export function useToolItems() {
     {
       value: tools.QuarterStitch,
       label: fluent.$t("stitch-quarter"),
-      icon: IconStitchQuarter,
+      icon: "stitch-quarter",
       shortcut: "Q",
     },
     {
       value: tools.QuarterStitchTL,
       label: fluent.$t("stitch-quarter-tl"),
-      icon: IconStitchQuarterTL,
+      icon: "stitch-quarter-tl",
       shortcut: "Q-T-L",
     },
     {
       value: tools.QuarterStitchTR,
       label: fluent.$t("stitch-quarter-tr"),
-      icon: IconStitchQuarterTR,
+      icon: "stitch-quarter-tr",
       shortcut: "Q-T-R",
     },
     {
       value: tools.QuarterStitchBR,
       label: fluent.$t("stitch-quarter-br"),
-      icon: IconStitchQuarterBR,
+      icon: "stitch-quarter-br",
       shortcut: "Q-B-R",
     },
     {
       value: tools.QuarterStitchBL,
       label: fluent.$t("stitch-quarter-bl"),
-      icon: IconStitchQuarterBL,
+      icon: "stitch-quarter-bl",
       shortcut: "Q-B-L",
     },
   ]);
@@ -132,13 +110,13 @@ export function useToolItems() {
     {
       value: tools.BackStitch,
       label: fluent.$t("stitch-back"),
-      icon: IconStitchBack,
+      icon: "stitch-back",
       shortcut: "S",
     },
     {
       value: tools.StraightStitch,
       label: fluent.$t("stitch-straight"),
-      icon: IconStitchStraight,
+      icon: "stitch-straight",
       shortcut: "S-S",
     },
   ]);
@@ -147,13 +125,13 @@ export function useToolItems() {
     {
       value: tools.FrenchKnot,
       label: fluent.$t("stitch-french-knot"),
-      icon: IconStitchFrenchKnot,
+      icon: "stitch-french-knot",
       shortcut: "K",
     },
     {
       value: tools.Bead,
       label: fluent.$t("stitch-bead"),
-      icon: IconStitchBead,
+      icon: "stitch-bead",
       shortcut: "J",
     },
   ]);
@@ -162,7 +140,7 @@ export function useToolItems() {
     {
       value: tools.Eraser,
       label: fluent.$t("palette-toolbar-eraser"),
-      icon: IconEraser,
+      icon: "eraser",
       shortcut: "E",
     },
   ]);
@@ -171,7 +149,7 @@ export function useToolItems() {
     {
       value: tools.Cursor,
       label: fluent.$t("palette-toolbar-cursor"),
-      icon: IconCursor,
+      icon: "cursor",
       shortcut: "C",
     },
   ]);
