@@ -10,13 +10,6 @@ import ButtonSquare from "./stories/ButtonSquare.vue";
 const meta = {
   title: "Element/Button",
   component: Button,
-  argTypes: {
-    color: { control: "select", options: ["primary", "neutral"] },
-    variant: { control: "select", options: ["solid", "outline", "soft", "subtle", "ghost", "link"] },
-    size: { control: "select", options: ["sm", "md", "lg"] },
-    leadingIcon: { control: "text" },
-    trailingIcon: { control: "text" },
-  },
 } satisfies Meta<typeof Button>;
 
 export default meta;

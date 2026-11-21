@@ -7,8 +7,6 @@ import TreeStates from "./stories/TreeStates.vue";
 import Tree from "./Tree.vue";
 import type { TreeItem } from "./Tree.vue";
 
-const sizes = ["sm", "md", "lg"] as const;
-
 const items: TreeItem[] = [
   {
     label: "My Layers",
@@ -70,9 +68,6 @@ const meta = {
   title: "Data/Tree",
   // @ts-expect-error `Tree` is a generic component.
   component: Tree,
-  argTypes: {
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof Tree>;
 
 export default meta;

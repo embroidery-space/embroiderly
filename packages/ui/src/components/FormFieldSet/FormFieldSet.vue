@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Collapsible } from "reka-ui/namespaced";
 
-import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import Button from "../Button/Button.vue";
 
 export interface FormFieldSetProps {
@@ -19,8 +18,6 @@ export interface FormFieldSetSlots {
 const open = defineModel<boolean>("open", { default: true });
 defineProps<FormFieldSetProps>();
 defineSlots<FormFieldSetSlots>();
-
-const { icons } = useComponentIcons();
 </script>
 
 <template>
@@ -32,7 +29,7 @@ const { icons } = useComponentIcons();
   <Collapsible.Root v-else v-model:open="open" as="fieldset" data-slot="root" :class="[$style.root]">
     <legend data-slot="legend" :class="$style.legend">
       <Collapsible.Trigger as-child>
-        <Button :label="legend" :leading-icon="open ? icons.minus : icons.plus" color="neutral" variant="ghost" />
+        <Button :label="legend" :leading-icon="open ? 'minus' : 'plus'" color="neutral" variant="ghost" />
       </Collapsible.Trigger>
     </legend>
 

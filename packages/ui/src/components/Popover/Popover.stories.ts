@@ -6,16 +6,9 @@ import PopoverDemo from "./stories/PopoverDemo.vue";
 import PopoverOpen from "./stories/PopoverOpen.vue";
 import PopoverOutsideClick from "./stories/PopoverOutsideClick.vue";
 
-const sides = ["top", "right", "bottom", "left"] as const;
-const aligns = ["start", "center", "end"] as const;
-
 const meta = {
   title: "Overlay/Popover",
   component: Popover,
-  argTypes: {
-    side: { control: "select", options: sides },
-    align: { control: "select", options: aligns },
-  },
 } satisfies Meta<typeof Popover>;
 
 export default meta;

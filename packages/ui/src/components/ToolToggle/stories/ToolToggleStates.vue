@@ -4,10 +4,10 @@ import ToolToggle from "../ToolToggle.vue";
 
 <template>
   <div id="tool-toggle-states">
-    <ToolToggle icon="lucide:eye" tooltip="Default" />
-    <ToolToggle icon="lucide:eye" tooltip="Disabled" disabled />
-    <ToolToggle icon="lucide:eye" tooltip="Toggled" :model-value="true" />
-    <ToolToggle icon="lucide:eye" tooltip="Toggled disabled" :model-value="true" disabled />
+    <ToolToggle icon="visibility" tooltip="Default" />
+    <ToolToggle icon="visibility" tooltip="Disabled" disabled />
+    <ToolToggle icon="visibility" tooltip="Toggled" :model-value="true" />
+    <ToolToggle icon="visibility" tooltip="Toggled disabled" :model-value="true" disabled />
   </div>
 </template>
 

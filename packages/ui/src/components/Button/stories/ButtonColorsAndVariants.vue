@@ -14,9 +14,9 @@ const variants: NonNullable<ButtonProps["variant"]>[] = ["solid", "outline", "so
       </template>
     </template>
 
-    <Button leading-icon="lucide:rocket">Leading Icon</Button>
-    <Button trailing-icon="lucide:rocket">Trailing Icon</Button>
-    <Button leading-icon="lucide:rocket" trailing-icon="lucide:rocket">Button</Button>
+    <Button leading-icon="rocket">Leading Icon</Button>
+    <Button trailing-icon="rocket">Trailing Icon</Button>
+    <Button leading-icon="rocket" trailing-icon="rocket">Button</Button>
 
     <Button loading>Loading</Button>
     <Button disabled>Disabled</Button>

@@ -12,9 +12,9 @@ const sizes = ["sm", "md", "lg"] as const;
 function demoItems(showGrid: { value: boolean }, showRulers: { value: boolean }): DropdownMenuItem[][] {
   return [
     [
-      { icon: "lucide:scissors", label: "Cut", shortcut: "Ctrl+X" },
-      { icon: "lucide:copy", label: "Copy", shortcut: "Ctrl+C" },
-      { icon: "lucide:clipboard", label: "Paste", shortcut: "Ctrl+V", disabled: true },
+      { icon: "content:scissors", label: "Cut", shortcut: "Ctrl+X" },
+      { icon: "content:copy", label: "Copy", shortcut: "Ctrl+C" },
+      { icon: "content:clipboard", label: "Paste", shortcut: "Ctrl+V", disabled: true },
     ],
     [
       { type: "label", label: "View" },

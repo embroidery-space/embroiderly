@@ -7,9 +7,6 @@ import TabsSizes from "./stories/TabsSizes.vue";
 import Tabs from "./Tabs.vue";
 import type { TabsItem } from "./Tabs.vue";
 
-const sizes = ["sm", "md", "lg"] as const;
-const orientations = ["horizontal", "vertical"] as const;
-
 const items: TabsItem[] = [
   { label: "Tab 1", content: "Lorem ipsum" },
   { label: "Tab 2", content: "dolor sit amet" },
@@ -20,10 +17,6 @@ const meta = {
   title: "Navigation/Tabs",
   // @ts-expect-error `Tabs` is a generic component.
   component: Tabs,
-  argTypes: {
-    orientation: { control: "select", options: orientations },
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof Tabs>;
 
 export default meta;

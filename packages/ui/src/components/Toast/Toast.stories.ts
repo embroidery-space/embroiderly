@@ -5,14 +5,9 @@ import ToastDemo from "./stories/ToastDemo.vue";
 import ToastDynamic from "./stories/ToastDynamic.vue";
 import Toast from "./Toast.vue";
 
-const colors = ["primary", "error", "warning", "success", "info", "help", "neutral"] as const;
-
 const meta = {
   title: "Overlay/Toast",
   component: Toast,
-  argTypes: {
-    color: { control: "select", options: colors },
-  },
 } satisfies Meta<typeof Toast>;
 
 export default meta;

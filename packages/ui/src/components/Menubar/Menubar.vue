@@ -6,7 +6,6 @@ import { computed, toRef } from "vue";
 
 import { usePortal } from "../../composables/usePortal.ts";
 import { useShortcuts, extractShortcuts } from "../../composables/useShortcuts.ts";
-import type { IconValue } from "../../types/icons.ts";
 import Button from "../Button/Button.vue";
 
 import MenubarContent from "./MenubarContent.vue";
@@ -21,7 +20,7 @@ export interface MenubarItem {
   description?: string;
 
   /** An icon to display before the label. */
-  icon?: IconValue;
+  icon?: string;
 
   /** Whether the checkbox item is checked. Only used when `type` is `"checkbox"`. */
   checked?: boolean;
@@ -56,7 +55,7 @@ export interface MenubarMenu<T extends MenubarItem = MenubarItem> {
   /** The label displayed on the menu trigger. */
   label: string;
   /** The icon displayed on the menu trigger. */
-  icon?: IconValue;
+  icon?: string;
   /** Whether the menu trigger is disabled. */
   disabled?: boolean;
   /** Whether the menu trigger is hidden. */

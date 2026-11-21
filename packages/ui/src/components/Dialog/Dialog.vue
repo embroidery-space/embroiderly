@@ -2,7 +2,6 @@
 import { Dialog } from "reka-ui/namespaced";
 import { toRef, useTemplateRef } from "vue";
 
-import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import { usePortal } from "../../composables/usePortal.ts";
 import Button from "../Button/Button.vue";
@@ -58,7 +57,6 @@ const slots = defineSlots<DialogSlots>();
 
 const portalProps = usePortal(toRef(() => props.portal));
 
-const { icons } = useComponentIcons();
 const locale = useLocale();
 
 function close(value?: unknown) {
@@ -105,7 +103,7 @@ defineExpose({ contentRef });
           <Dialog.Close as-child>
             <slot name="close" :close="close">
               <Button
-                :icon="icons.close"
+                icon="close"
                 color="neutral"
                 variant="ghost"
                 size="md"

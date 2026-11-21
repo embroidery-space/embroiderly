@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 
-import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import ButtonIcon from "../ButtonIcon/ButtonIcon.vue";
 import FormField from "../FormField/FormField.vue";
@@ -42,7 +41,6 @@ const props = withDefaults(defineProps<InputDimensionsProps>(), {
   orientation: "horizontal",
 });
 
-const { icons } = useComponentIcons();
 const locale = useLocale();
 
 const aspectRatioLocked = ref(props.aspectRatio !== undefined);
@@ -100,7 +98,7 @@ function handleHeightChange(newHeight: number) {
     </FormField>
 
     <ButtonIcon
-      :icon="aspectRatioLocked ? icons.link : icons.unlink"
+      :icon="aspectRatioLocked ? 'link' : 'unlink'"
       :tooltip="
         aspectRatioLocked
           ? locale.messages.inputDimensions.unlockAspectRatio

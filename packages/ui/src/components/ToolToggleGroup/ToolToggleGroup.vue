@@ -3,14 +3,13 @@ import type { AcceptableValue } from "reka-ui";
 import { Field, ToggleGroup } from "reka-ui/namespaced";
 
 import { useShortcuts } from "../../composables/useShortcuts.ts";
-import type { IconValue } from "../../types/icons.ts";
 import Icon from "../Icon/Icon.vue";
 import Tooltip from "../Tooltip/Tooltip.vue";
 import type { TooltipProps } from "../Tooltip/Tooltip.vue";
 
 export interface ToolToggleItem {
   /** The icon to display. */
-  icon: IconValue;
+  icon: string;
 
   /** Visible text beside the button (for expanded mode). */
   label?: string;

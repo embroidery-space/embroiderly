@@ -5,12 +5,6 @@ import ButtonIcon from "./ButtonIcon.vue";
 const meta = {
   title: "Element/ButtonIcon",
   component: ButtonIcon,
-  argTypes: {
-    color: { control: "select", options: ["primary", "neutral"] },
-    variant: { control: "select", options: ["solid", "outline", "soft", "subtle", "ghost", "link"] },
-    size: { control: "select", options: ["sm", "md", "lg"] },
-    icon: { control: "text" },
-  },
 } satisfies Meta<typeof ButtonIcon>;
 
 export default meta;
@@ -22,7 +16,7 @@ export const Demo: Story = {
     color: "neutral",
     variant: "ghost",
 
-    icon: "lucide:settings",
+    icon: "settings",
 
     tooltip: "Settings",
     shortcut: "Ctrl+,",

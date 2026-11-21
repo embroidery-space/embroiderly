@@ -7,10 +7,6 @@ import EditableStates from "./stories/EditableStates.vue";
 const meta = {
   title: "Form/Editable",
   component: Editable,
-  argTypes: {
-    activationMode: { control: "select", options: ["dblclick", "focus"] },
-    submitMode: { control: "select", options: ["both", "enter", "blur"] },
-  },
 } satisfies Meta<typeof Editable>;
 
 export default meta;

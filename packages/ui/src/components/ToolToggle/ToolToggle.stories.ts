@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 export const Demo: Story = {
   args: {
     modelValue: false,
-    icon: "lucide:eye",
+    icon: "visibility",
 
     label: "",
     description: "",
@@ -41,20 +41,20 @@ export const Demo: Story = {
 };
 
 export const Compact: Story = {
-  args: { icon: "lucide:eye" },
+  args: { icon: "visibility" },
   render: () => ({
     components: { ToolToggleDemo },
-    template: `<ToolToggleDemo icon="lucide:eye" tooltip="Show symbols" shortcut="Ctrl+S" />`,
+    template: `<ToolToggleDemo icon="visibility" tooltip="Show symbols" shortcut="Ctrl+S" />`,
   }),
 };
 
 export const Expanded: Story = {
-  args: { icon: "lucide:eye" },
+  args: { icon: "visibility" },
   render: () => ({
     components: { ToolToggleDemo },
     template: `
       <ToolToggleDemo
-        icon="lucide:eye"
+        icon="visibility"
         label="Show symbols"
         description="Toggle symbol visibility on the canvas"
         shortcut="Ctrl+S"
@@ -64,7 +64,7 @@ export const Expanded: Story = {
 };
 
 export const States: Story = {
-  args: { icon: "lucide:eye" },
+  args: { icon: "visibility" },
   render: () => ({
     components: { ToolToggleStates },
     template: `<ToolToggleStates />`,
@@ -72,7 +72,7 @@ export const States: Story = {
 };
 
 export const ShortcutToggled: Story = {
-  args: { icon: "lucide:eye", tooltip: "Show", shortcut: "S", "onUpdate:modelValue": fn() },
+  args: { icon: "visibility", tooltip: "Show", shortcut: "S", "onUpdate:modelValue": fn() },
   tags: ["!autodocs", "!snapshot"],
   async play({ userEvent, args }) {
     await userEvent.keyboard("s");
@@ -81,7 +81,7 @@ export const ShortcutToggled: Story = {
 };
 
 export const DisabledShortcutIgnored: Story = {
-  args: { icon: "lucide:eye", tooltip: "Show", shortcut: "S", disabled: true, "onUpdate:modelValue": fn() },
+  args: { icon: "visibility", tooltip: "Show", shortcut: "S", disabled: true, "onUpdate:modelValue": fn() },
   tags: ["!autodocs", "!snapshot"],
   parameters: { snapshot: { enable: false } },
   async play({ userEvent, args }) {

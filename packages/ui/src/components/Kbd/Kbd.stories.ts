@@ -7,10 +7,6 @@ import KbdSizes from "./stories/KbdSizes.vue";
 const meta = {
   title: "Element/Kbd",
   component: Kbd,
-  argTypes: {
-    value: { control: "text" },
-    size: { control: "select", options: ["sm", "md", "lg"] },
-  },
 } satisfies Meta<typeof Kbd>;
 
 export default meta;

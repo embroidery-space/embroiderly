@@ -72,7 +72,6 @@ async function onClickWrapper(event: MouseEvent) {
   }
 }
 
-const { icons } = useComponentIcons();
 const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(
   computed(() => ({
     ...props,
@@ -80,7 +79,7 @@ const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponen
     trailingIcon: props.trailingIcon
       ? props.trailingIcon
       : !props.trailing && isExternalHref(props.href)
-        ? icons.value.external
+        ? "link-external"
         : undefined,
   })),
 );

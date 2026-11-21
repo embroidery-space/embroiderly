@@ -8,7 +8,7 @@ const sizes: NonNullable<ButtonProps["size"]>[] = ["sm", "md", "lg"];
 <template>
   <div id="button-square">
     <template v-for="size in sizes" :key="size">
-      <Button :size="size" square icon="lucide:rocket" />
+      <Button :size="size" square icon="rocket" />
     </template>
   </div>
 </template>

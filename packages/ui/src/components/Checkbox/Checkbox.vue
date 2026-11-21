@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { Checkbox, Field } from "reka-ui/namespaced";
 
-import { useComponentIcons } from "../../composables/useComponentIcons.ts";
-import type { IconValue } from "../../types/icons.ts";
 import Icon from "../Icon/Icon.vue";
 
 export interface CheckboxProps {
@@ -10,12 +8,6 @@ export interface CheckboxProps {
   label?: string;
   /** The description of the checkbox. */
   description?: string;
-
-  /**
-   * The icon displayed when checked.
-   * @default "icons.check"
-   */
-  icon?: IconValue;
 
   /** Whether the checkbox is disabled. */
   disabled?: boolean;
@@ -25,8 +17,6 @@ defineOptions({ inheritAttrs: false });
 
 const modelValue = defineModel<boolean>();
 defineProps<CheckboxProps>();
-
-const { icons } = useComponentIcons();
 </script>
 
 <template>
@@ -34,7 +24,7 @@ const { icons } = useComponentIcons();
     <div data-slot="container" :class="$style.container">
       <Checkbox.Root v-model="modelValue" v-bind="$attrs" :disabled="disabled" data-slot="base" :class="$style.base">
         <Checkbox.Indicator data-slot="indicator" :class="$style.indicator">
-          <Icon :name="icon ?? icons.check" data-slot="icon" :class="$style.icon" />
+          <Icon name="check" data-slot="icon" :class="$style.icon" />
         </Checkbox.Indicator>
       </Checkbox.Root>
     </div>

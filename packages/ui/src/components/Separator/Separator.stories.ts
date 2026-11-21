@@ -4,15 +4,9 @@ import Separator from "./Separator.vue";
 import SeparatorDemo from "./stories/SeparatorDemo.vue";
 import SeparatorSizes from "./stories/SeparatorSizes.vue";
 
-const sizes = ["xs", "sm", "md", "lg", "xl"];
-
 const meta = {
   title: "Element/Separator",
   component: Separator,
-  argTypes: {
-    orientation: { control: "select", options: ["horizontal", "vertical"] },
-    size: { control: "select", options: sizes },
-  },
 } satisfies Meta<typeof Separator>;
 
 export default meta;

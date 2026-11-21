@@ -8,10 +8,6 @@ import ConfirmDialogOpen from "./stories/ConfirmDialogOpen.vue";
 const meta = {
   title: "Overlay/ConfirmDialog",
   component: ConfirmDialog,
-  argTypes: {
-    title: { control: "text" },
-    description: { control: "text" },
-  },
 } satisfies Meta<typeof ConfirmDialog>;
 
 export default meta;

@@ -3,7 +3,6 @@ import type { ToastRootEmits, ToastRootProps } from "reka-ui";
 import { Toast } from "reka-ui/namespaced";
 import { computed } from "vue";
 
-import { useComponentIcons } from "../../composables/useComponentIcons.ts";
 import { useLocale } from "../../composables/useLocale.ts";
 import Button from "../Button/Button.vue";
 import type { ButtonProps } from "../Button/Button.vue";
@@ -39,7 +38,6 @@ const props = withDefaults(defineProps<ToastProps>(), {
 });
 const slots = defineSlots<ToastSlots>();
 
-const { icons } = useComponentIcons();
 const locale = useLocale();
 
 const hasTitle = computed(() => !!props.title || !!slots.title);
@@ -85,7 +83,7 @@ const hasTitle = computed(() => !!props.title || !!slots.title);
     <Toast.Close as-child>
       <slot name="close">
         <Button
-          :icon="icons.close"
+          icon="close"
           color="neutral"
           variant="link"
           size="md"

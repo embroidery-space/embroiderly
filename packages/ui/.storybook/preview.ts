@@ -1,5 +1,3 @@
-import lucideIcons from "@iconify-json/lucide/icons.json";
-import { addCollection } from "@iconify/vue";
 import { setup } from "@storybook/vue3-vite";
 import type { Preview } from "@storybook/vue3-vite";
 
@@ -9,9 +7,6 @@ import Placeholder from "./components/Placeholder.vue";
 import DocsTemplate from "./DocsTemplate.mdx";
 
 import "../src/index.css";
-
-// Load Lucide icons offline.
-addCollection(lucideIcons);
 
 setup((app) => {
   app.component("Placeholder", Placeholder);
