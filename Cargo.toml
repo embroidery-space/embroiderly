@@ -158,7 +158,7 @@ itertools = "0.15.0"
 time = "0.3.55"
 
 # Testing utilities
-rstest = "0.28.0"
+rstest = "0.29.0"
 insta = "1.49.0"
 
 # Other
